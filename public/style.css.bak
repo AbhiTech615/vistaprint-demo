@@ -1,25 +1,84 @@
-body {
-  font-family: Arial, sans-serif;
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
 }
 
-nav {
-  background-color: #007bff;
-  padding: 10px;
+body {
+  line-height: 1.6;
+  color: #333;
+  background: #f9f9f9;
+}
+
+header {
+  background: #004080;
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 
 nav a {
   color: white;
-  margin-right: 15px;
   text-decoration: none;
+  margin-left: 1.5rem;
+}
+
+.hero {
+  background: url('https://via.placeholder.com/1200x400') no-repeat center center/cover;
+  color: white;
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.hero .btn {
+  margin-top: 1rem;
+  display: inline-block;
+  padding: 0.8rem 1.5rem;
+  background: #ff6600;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
   font-weight: bold;
 }
 
-nav a:hover {
-  text-decoration: underline;
+.features {
+  padding: 2rem;
+  text-align: center;
 }
 
-h1 {
-  padding: 20px;
+.product-grid {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+}
+
+.product-card {
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  width: 200px;
+}
+
+footer {
+  background: #222;
+  color: #aaa;
+  text-align: center;
+  padding: 1rem;
+  margin-top: 2rem;
 }
