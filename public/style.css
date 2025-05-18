@@ -82,3 +82,28 @@ footer {
   padding: 1rem;
   margin-top: 2rem;
 }
+----------------------------For Catalog---------------------------------
+
+.catalog {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+  justify-content: center;
+}
+
+.product-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 220px;
+  text-align: center;
+  padding: 15px;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.product-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
