@@ -4,7 +4,6 @@
   "description": "This is a custom-built clone of the VistaPrint website, built for the Indian market. It features online designing, product customization, and order management — aimed to serve businesses and individuals with professional printing and branding solutions.",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
   "repository": {
@@ -20,5 +19,18 @@
   "homepage": "https://github.com/AbhiTech615/vistaprint-demo#readme",
   "dependencies": {
     "express": "^5.1.0"
+  }
+}
+{
+  "name": "vistaprint-demo",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
   }
 }
