@@ -129,5 +129,107 @@ footer {
 .product-detail h2 {
   margin-top: 0;
 }
+--------------------------------------Product page layout-----------------------------------------------------------
 
+.product-page {
+  display: flex;
+  gap: 2rem;
+  padding: 2rem;
+}
 
+.product-image img {
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.product-info {
+  max-width: 600px;
+}
+
+.product-info h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.product-info .price {
+  font-size: 20px;
+  color: #007bff;
+  margin-bottom: 15px;
+}
+
+.product-info button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+--------------------------------------Cart-------------------------------
+
+/* Cart Page Styles */
+.cart-page h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.cart-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.item-details h3 {
+  margin-bottom: 5px;
+  color: #444;
+}
+
+.item-details p {
+  margin: 3px 0;
+}
+
+.btn-remove {
+  padding: 8px 14px;
+  background-color: #e74c3c;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-remove:hover {
+  background-color: #c0392b;
+}
+
+.cart-summary {
+  margin-top: 30px;
+  padding: 20px;
+  border-top: 2px dashed #ccc;
+  text-align: right;
+}
+
+.btn-checkout {
+  padding: 12px 20px;
+  background-color: #2ecc71;
+  color: white;
+  border: none;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-checkout:hover {
+  background-color: #27ae60;
+}
