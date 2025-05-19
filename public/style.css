@@ -11,6 +11,33 @@ body {
   background: #f9f9f9;
 }
 
+---------------------------------nav---------------------
+.navbar {
+  background-color: #004080;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+}
+
+.navbar .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.navbar nav a {
+  color: white;
+  margin-left: 1.5rem;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.navbar nav a:hover {
+  text-decoration: underline;
+}
+----------------------------------------------------------------
+
 header {
   background: #004080;
   color: white;
@@ -32,10 +59,10 @@ nav a {
 }
 
 .hero {
-  background: url('https://via.placeholder.com/1200x400') no-repeat center center/cover;
-  color: blue;
+  background: url('https://source.unsplash.com/1600x500/?printing') no-repeat center center/cover;
+  color: white;
   text-align: center;
-  padding: 4rem 2rem;
+  padding: 100px 20px;
 }
 
 .hero h1 {
@@ -44,11 +71,9 @@ nav a {
 }
 
 .hero .btn {
-  margin-top: 1rem;
-  display: inline-block;
-  padding: 0.8rem 1.5rem;
-  background: #ff6600;
+  background-color: #ff6600;
   color: white;
+  padding: 0.75rem 1.5rem;
   text-decoration: none;
   border-radius: 5px;
   font-weight: bold;
@@ -75,13 +100,14 @@ nav a {
   width: 200px;
 }
 
-footer {
-  background: #222;
-  color: #aaa;
+.footer {
+  background-color: #004080;
+  color: white;
   text-align: center;
   padding: 1rem;
   margin-top: 2rem;
 }
+
 ----------------------------For Catalog---------------------------------
 
 .catalog {
@@ -322,4 +348,39 @@ textarea {
     margin: 1rem;
     padding: 1.5rem;
   }
+}
+-------------------------------------------------------------------------------
+
+.highlights {
+  padding: 2rem;
+  text-align: center;
+}
+
+.highlights h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.grid {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.card {
+  background-color: #f4f4f4;
+  border-radius: 8px;
+  overflow: hidden;
+  width: 300px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.card img {
+  width: 100%;
+  height: auto;
+}
+
+.card h3 {
+  padding: 1rem;
 }
