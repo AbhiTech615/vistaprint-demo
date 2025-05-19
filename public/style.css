@@ -107,3 +107,27 @@ footer {
   height: auto;
   border-radius: 4px;
 }
+----------------------------For Product Details---------------------------------
+
+.product-detail {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  align-items: flex-start;
+}
+
+.product-detail img {
+  width: 300px;
+  height: auto;
+  border-radius: 10px;
+}
+
+.product-detail div {
+  max-width: 500px;
+}
+
+.product-detail h2 {
+  margin-top: 0;
+}
+
+
