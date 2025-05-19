@@ -68,7 +68,7 @@ body {
 }
 
 .navbar a {
-  color: grey;
+  color: white;
   text-decoration: none;
   font-weight: bold;
 }

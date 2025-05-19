@@ -1,0 +1,40 @@
+.motion-navbar {
+  background-color: #2c3e50;
+  padding: 10px 20px;
+  animation: slideDown 1s ease-out;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.logo {
+  height: 50px;
+  margin-right: 20px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 30px;
+  list-style: none;
+}
+
+.nav-links li a {
+  color: purple;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 500;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.nav-links li a:hover {
+  color: #f1c40f;
+  transform: scale(1.1);
+}
