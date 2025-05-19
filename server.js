@@ -15,3 +15,10 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
 });
+
+app.use(express.urlencoded({ extended: true })); // to parse form data
+
+app.post('/submit-order', (req, res) => {
+  console.log('Order data received:', req.body);
+  res.send('Order received! Thank you.');
+});
