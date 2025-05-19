@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout - Vistaprint Demo</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>Checkout</h1>
+    <nav>
+      <a href="index.html">Home</a> |
+      <a href="catalog.html">Catalog</a> |
+      <a href="cart.html">Cart</a>
+    </nav>
+  </header>
+
+  <main class="checkout">
+    <h2>Billing & Shipping Information</h2>
+    <form>
+      <label for="name">Full Name:</label><br>
+      <input type="text" id="name" name="name"><br>
+
+      <label for="address">Address:</label><br>
+      <textarea id="address" name="address"></textarea><br>
+
+      <label for="payment">Payment Method:</label><br>
+      <select id="payment" name="payment">
+        <option value="cod">Cash on Delivery</option>
+        <option value="card">Credit/Debit Card</option>
+      </select><br><br>
+
+      <button type="submit">Place Order</button>
+    </form>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Vistaprint Demo</p>
+  </footer>
+</body>
+</html>
+
+
