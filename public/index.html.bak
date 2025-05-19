@@ -2,55 +2,48 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>My Print Shop</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VistaPrint Demo</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
   <header>
-    <div class="container">
-      <h1>My Print Shop</h1>
-      <nav>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </nav>
-    </div>
+    <div class="logo">VistaPrint Demo</div>
+    <nav>
+      <a href="/">Home</a>
+      <a href="#">Products</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+    </nav>
   </header>
 
   <section class="hero">
-    <div class="container">
-      <h2>Custom Printing Solutions</h2>
-      <p>Quality prints for your business and personal needs.</p>
-      <a href="#" class="btn-primary">Get Started</a>
-    </div>
+    <h1>Design. Print. Deliver.</h1>
+    <p>Custom business cards, t-shirts, mugs & more – for every need.</p>
+    <a href="#" class="btn">Start Designing</a>
   </section>
 
   <section class="features">
-    <div class="container">
-      <div class="feature-item">
-        <h3>Fast Delivery</h3>
-        <p>Receive your prints in just 3 days.</p>
+    <h2>Popular Products</h2>
+    <div class="product-grid">
+      <div class="product-card">
+        <img src="https://via.placeholder.com/200x150" alt="Business Cards" />
+        <h3>Business Cards</h3>
       </div>
-      <div class="feature-item">
-        <h3>Affordable Prices</h3>
-        <p>High quality without breaking your budget.</p>
+      <div class="product-card">
+        <img src="https://via.placeholder.com/200x150" alt="Custom T-Shirts" />
+        <h3>Custom T-Shirts</h3>
       </div>
-      <div class="feature-item">
-        <h3>Wide Selection</h3>
-        <p>From business cards to banners, we’ve got you covered.</p>
+      <div class="product-card">
+        <img src="https://via.placeholder.com/200x150" alt="Photo Mugs" />
+        <h3>Photo Mugs</h3>
       </div>
     </div>
   </section>
+<a href="catalog.html">View Product Catalog</a>
 
   <footer>
-    <div class="container">
-      <p>© 2025 My Print Shop. All rights reserved.</p>
-    </div>
+    <p>© 2025 VistaPrint Demo | Built with ❤️ for India</p>
   </footer>
-
 </body>
 </html>
