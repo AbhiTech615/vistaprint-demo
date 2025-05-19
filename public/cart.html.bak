@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cart - VistaPrint Clone</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Your Shopping Cart</h1>
+    <nav>
+      <a href="index.html">Home</a> |
+      <a href="catalog.html">Catalog</a>
+    </nav>
+  </header>
+
+  <main class="cart-container">
+    <div class="cart-item">
+      <img src="https://via.placeholder.com/100" alt="Product Image">
+      <div class="item-details">
+        <h2>Custom Business Card</h2>
+        <p>Quantity: <input type="number" value="2" min="1"></p>
+        <p>Price: ₹150</p>
+        <p>Total: ₹300</p>
+      </div>
+    </div>
+
+    <div class="cart-total">
+      <h3>Subtotal: ₹300</h3>
+      <button onclick="alert('Proceeding to checkout...')">Checkout</button>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 VistaPrint India Clone</p>
+  </footer>
+</body>
+</html>

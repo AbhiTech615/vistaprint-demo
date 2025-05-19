@@ -2,49 +2,46 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>VistaPrint Demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Cart - VistaPrint Demo</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header>
-    <div class="logo">VistaPrint Demo</div>
-    <nav>
-      <a href="/">Home</a>
-      <a href="#">Products</a>
-      <a href="#">About</a>
-      <a href="#">Contact</a>
-	  <a href="catalog.html">View Product Catalog</a>
-
-    </nav>
+  <header class="site-header">
+    <div class="container">
+      <h1 class="logo">VistaPrint Demo</h1>
+      <nav class="site-nav">
+        <a href="index.html">Home</a>
+        <a href="catalog.html">Catalog</a>
+        <a href="cart.html" class="active">Cart</a>
+      </nav>
+    </div>
   </header>
 
-  <section class="hero">
-    <h1>Design. Print. Deliver.</h1>
-    <p>Custom business cards, t-shirts, mugs & more – for every need.</p>
-    <a href="#" class="btn">Start Designing</a>
-  </section>
+  <main class="cart-page container">
+    <h2>Your Shopping Cart 🛒</h2>
 
-  <section class="features">
-    <h2>Popular Products</h2>
-    <div class="product-grid">
-      <div class="product-card">
-        <img src="https://via.placeholder.com/200x150" alt="Business Cards" />
-        <h3>Business Cards</h3>
+    <div class="cart-list">
+      <div class="cart-item">
+        <div class="item-details">
+          <h3>Custom Business Card</h3>
+          <p>Quantity: <strong>2</strong></p>
+          <p>Price: <strong>₹998.00</strong></p>
+        </div>
+        <button class="btn-remove">Remove</button>
       </div>
-      <div class="product-card">
-        <img src="https://via.placeholder.com/200x150" alt="Custom T-Shirts" />
-        <h3>Custom T-Shirts</h3>
-      </div>
-      <div class="product-card">
-        <img src="https://via.placeholder.com/200x150" alt="Photo Mugs" />
-        <h3>Photo Mugs</h3>
-      </div>
+
+      <!-- You can copy this block for more items -->
     </div>
-  </section>
 
-  <footer>
-    <p>© 2025 VistaPrint Demo | Built with ❤️ for India</p>
+    <div class="cart-summary">
+      <h3>Total: ₹998.00</h3>
+      <button class="btn-checkout">Proceed to Checkout</button>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2025 VistaPrint Clone. All rights reserved.</p>
   </footer>
 </body>
 </html>

@@ -1,31 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Product Detail</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>Product Details</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
-    <h1>Product Detail Page</h1>
-    <a href="index.html">Home</a> | <a href="catalog.html">Back to Catalog</a>
+    <h1>VistaPrint Demo</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="catalog.html">Catalog</a>
+    </nav>
   </header>
 
-  <main class="product-detail">
-    <img src="https://via.placeholder.com/300" alt="Product Image" />
-    <div>
-      <h2>Business Cards</h2>
-      <p>Customize your business cards with your logo, brand colors, and details. Choose from a variety of paper types and finishes.</p>
-      <label>Quantity:</label>
-      <select>
-        <option>100</option>
-        <option>250</option>
-        <option>500</option>
-      </select>
-      <br /><br />
+  <main class="product-page">
+    <div class="product-image">
+      <img src="images/sample-product.jpg" alt="Product Image">
+    </div>
+    <div class="product-info">
+      <h2>Custom Business Card</h2>
+      <p class="price">₹499.00</p>
+      <p class="description">High-quality premium business cards for your brand identity. Matte or glossy finish available.</p>
       <button>Add to Cart</button>
     </div>
   </main>
+
+  <footer>
+    <p>&copy; 2025 VistaPrint Clone. All rights reserved.</p>
+  </footer>
 </body>
 </html>
