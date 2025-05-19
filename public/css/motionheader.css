@@ -1,0 +1,85 @@
+/* Motion blur header styles */
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #111;
+  color: #fff;
+}
+
+.motion-header {
+  position: fixed;
+  width: 100%;
+  padding: 30px 50px;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  background: transparent;
+  transition: background-color 0.5s ease, backdrop-filter 0.5s ease, box-shadow 0.5s ease;
+}
+
+.motion-header.scrolled {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.3);
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.motion-title {
+  font-size: 2.5rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #fff;
+  user-select: none;
+  filter: drop-shadow(0 0 3px rgba(255,255,255,0.7));
+  transition: filter 0.3s ease;
+}
+
+.motion-nav ul {
+  list-style: none;
+  display: flex;
+  gap: 40px;
+  margin: 0;
+  padding: 0;
+}
+
+.motion-nav a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.motion-nav a:hover {
+  color: #ffd700;
+}
+
+/* Extra subtle text motion effect */
+.motion-title.motion-move {
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.9));
+  transform: translateX(var(--move-x, 0)) translateY(var(--move-y, 0));
+}
+/* motion-header.css */
+
+.motion-navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+  background-color: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
+}
+
+.motion-navbar.scrolled {
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+
