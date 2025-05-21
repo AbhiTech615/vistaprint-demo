@@ -31,10 +31,13 @@ if (title) {
   });
 }
 
-// Second scroll effect on .motion-navbar
+/// Scroll effect on .motion-navbar
 window.addEventListener("scroll", () => {
   const motionNavbar = document.querySelector(".motion-navbar");
   if (motionNavbar) {
     motionNavbar.classList.toggle("scrolled", window.scrollY > 50);
   }
 });
+
+
+
