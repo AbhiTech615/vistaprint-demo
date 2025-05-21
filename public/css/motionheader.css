@@ -1,21 +1,12 @@
 /* Motion blur header styles */
 body {
   margin: 0;
-  font-family: 'Poppins', sans-serif;
-  background: #111;
-  color: #fff;
+  font-family: 'Georgia', serif;
+  background: #fff;
+  color: #060270;
+  
 }
 
-.motion-header {
-  position: fixed;
-  width: 100%;
-  padding: 30px 50px;
-  top: 0;
-  left: 0;
-  z-index: 1000;
-  background: transparent;
-  transition: background-color 0.5s ease, backdrop-filter 0.5s ease, box-shadow 0.5s ease;
-}
 
 .motion-header.scrolled {
   background: rgba(255, 255, 255, 0.1);
@@ -29,15 +20,6 @@ body {
   align-items: center;
 }
 
-.motion-title {
-  font-size: 2.5rem;
-  font-weight: 900;
-  letter-spacing: 2px;
-  color: #fff;
-  user-select: none;
-  filter: drop-shadow(0 0 3px rgba(255,255,255,0.7));
-  transition: filter 0.3s ease;
-}
 
 .motion-nav ul {
   list-style: none;
@@ -64,22 +46,107 @@ body {
   filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.9));
   transform: translateX(var(--move-x, 0)) translateY(var(--move-y, 0));
 }
-/* motion-header.css */
 
 .motion-navbar {
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 100;
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color:  #004080;;
   backdrop-filter: blur(10px);
   transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
 }
 
 .motion-navbar.scrolled {
-  background-color: rgba(255, 255, 255, 0.95);
+  background-color: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(20px);
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
+.animated-blur-bg {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  filter: blur(60px);
+  animation: blur-move 20s ease-in-out infinite alternate;
+  z-index: -1;
+}
+
+@keyframes blur-move {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    transform: translate(20%, 10%) scale(1.2);
+  }
+}
 
 
+------------------------------------------------------------------------------------
+
+.motion-showcase {
+  position: relative;
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background: #000;
+  color: #fff;
+  text-align: center;
+}
+
+.blur-background {
+  position: absolute;
+  width: 150%;
+  height: 150%;
+  background: radial-gradient(circle at 30% 30%, #00c3ff, #005bea, #000);
+  animation: blurMotion 8s linear infinite alternate;
+  filter: blur(60px);
+  z-index: 1;
+}
+
+@keyframes blurMotion {
+  0% {
+    transform: translate(-10%, -10%);
+  }
+  100% {
+    transform: translate(10%, 10%);
+  }
+}
+
+.motion-content {
+  position: relative;
+  z-index: 2;
+}
+
+.motion-heading {
+  font-size: 3rem;
+  font-weight: 500;
+  margin-top: 5rem;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+.motion-subtitle {
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+  opacity: 0.85;
+}
+
+.motion-btn {
+  display: inline-block;
+  padding: 12px 30px;
+  font-size: 1rem;
+  color: #fff;
+  background: #ff5722;
+  border-radius: 50px;
+  text-decoration: none;
+  box-shadow: 0 8px 24px rgba(255, 87, 34, 0.4);
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.motion-btn:hover {
+  background: #e64a19;
+  transform: translateY(-3px);
+}
