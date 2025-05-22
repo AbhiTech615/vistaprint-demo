@@ -38,6 +38,21 @@ window.addEventListener("scroll", () => {
     motionNavbar.classList.toggle("scrolled", window.scrollY > 50);
   }
 });
+<<<<<<< HEAD
 
+=======
+
+// Simple slider logic
+let current = 0;
+const slides = document.querySelectorAll(".slide");
+
+function showNextSlide() {
+  slides[current].classList.remove("active");
+  current = (current + 1) % slides.length;
+  slides[current].classList.add("active");
+}
+
+setInterval(showNextSlide, 5000); // change slide every 5 seconds
+>>>>>>> 45c044b (WIP: prepare for rebase before push)
 
 

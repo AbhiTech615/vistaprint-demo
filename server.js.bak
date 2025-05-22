@@ -1,17 +1,11 @@
 const express = require('express');
 const path = require('path');
-const cors = require('cors'); // <-- Add this line
+const cors = require('cors');
 
 const app = express();
 
-app.use(express.static('public'));  // serve static files from public folder
-
-app.listen(3000, () => {
-  console.log('Server started on port 3000');
-});
-
 // Enable CORS for all routes
-app.use(cors()); // <-- Add this line
+app.use(cors());
 
 // Middleware to parse URL-encoded data (form submissions)
 app.use(express.urlencoded({ extended: true }));

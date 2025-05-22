@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -21,8 +22,7 @@
 
   <!-- Add other CSS files as needed -->
 </head>
-<body>
-  
+<body>  
   <header class="motion-navbar">
     <nav class="nav-container">
       <div class="logo">
@@ -39,10 +39,45 @@
     </nav>
   </header>
 
+<!-- Swiper CSS -->
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+
+<!-- Replace video section with slider -->
+<section class="motion-showcase">
+  <div class="swiper-container motion-slider">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide"><img src="./assets/slider1.jpg" alt="Slide 1"  height=20px;/></div>
+      <div class="swiper-slide"><img src="./assets/slider2.jpg" alt="Slide 2" /></div>
+      <!-- Add more slides as needed -->
+    </div>
+  </div>
+  <div class="motion-content">
+    <h1 class="motion-heading">Creative Prints, Stunning Results</h1>
+    <p class="motion-subtitle">Make your brand shine with VistaPrint Demo</p>
+    <a href="./catalog.html" class="motion-btn">Explore Products</a>
+  </div>
+</section>
+
+<!-- Swiper JS -->
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script>
+  new Swiper('.swiper-container', {
+    loop: true,
+    autoplay: {
+      delay: 4000,
+    },
+    effect: 'fade',
+  });
+</script>
+
+  
+<main>
+
 
   <!-- 2. Hero Section -->
   <section class="hero">  
     ...
+	
   </section>
      <!-- Featured Products Section -->
 
@@ -50,16 +85,16 @@
     <h2>Featured Products</h2>
     <div class="product-grid">
       <div class="product-card">
-        <img src="/assets/sample-product.jpg" alt="Business Cards" />
+        <img src="./assets/sample-product.jpg" alt="Business Cards" />
         <h3>Business Cards</h3>
         <p>High-quality, customizable cards to make your brand stand out.</p>
-        <a href="/catalog.html" class="btn">Shop Now</a>
+        <a href="./catalog.html" class="btn">Shop Now</a>
       </div>
       <div class="product-card">
-        <img src="/assets/sample-product.jpg" alt="T-Shirts" />
+        <img src="./assets/sample-product.jpg" alt="T-Shirts" />
         <h3>Custom T-Shirts</h3>
         <p>Print your own designs on premium cotton T-shirts.</p>
-        <a href="/catalog.html" class="btn">Shop Now</a>
+        <a href="./catalog.html" class="btn">Shop Now</a>
       </div>
       <!-- Add more product cards if needed -->
     </div>
@@ -70,20 +105,20 @@
     <h2>Top Products</h2>
     <div class="grid">
       <div class="card">
-        <img src="https://source.unsplash.com/300x200/?business-card" alt="Business Card">
+        <img src="./assets/sample-product.jpg" alt="Business Card">
         <h3>Business Cards</h3>
       </div>
       <div class="card">
-        <img src="https://source.unsplash.com/300x200/?tshirt,print" alt="T-Shirts">
+        <img src="./assets/sample-product.jpg" alt="T-Shirts">
         <h3>Custom T-Shirts</h3>
       </div>
       <div class="card">
-        <img src="https://source.unsplash.com/300x200/?flyer,print" alt="Flyers">
+        <img src="./assets/sample-product.jpg" alt="Flyers">
         <h3>Marketing Flyers</h3>
       </div>
     </div>
   </section>
-
+</main>
   <!-- 4. Footer -->
   <footer class="footer">
   <p>© 2025 MyPrintShop | Contact: info@myprintshop.com</p>

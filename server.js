@@ -9,6 +9,8 @@ app.use(cors());
 
 // Middleware to parse URL-encoded data (form submissions)
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json()); // ← Add this here
+
 
 // Serve static files from the "public" folder
 app.use(express.static(path.join(__dirname, 'public')));
@@ -23,6 +25,12 @@ app.post('/submit-order', (req, res) => {
   console.log('Order data received:', req.body);
   res.send('Order received! Thank you.');
 });
+
+// Handle 404 - Page not found
+app.use((req, res) => {
+  res.status(404).sendFile(path.join(__dirname, 'public', '404.html'));
+});
+
 
 // Start the server
 const PORT = process.env.PORT || 3000;
