@@ -19,6 +19,26 @@
 
 <!-- Link to JS file -->
 <script src="./js/main.js" defer></script>
+<!-- Swiper CSS -->
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+<!-- Swiper JS -->
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script>
+  const swiper = new Swiper('.swiper', {
+    loop: true,
+    autoplay: {
+      delay: 4000,
+    },
+    pagination: {
+      el: '.swiper-pagination',
+    },
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+  });
+</script>
+
 
   <!-- Add other CSS files as needed -->
 </head>
@@ -43,32 +63,37 @@
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
 
 <!-- Replace video section with slider -->
-<section class="motion-showcase">
-  <div class="swiper-container motion-slider">
+<section class="motion-slider">
+  <div class="swiper">
     <div class="swiper-wrapper">
-      <div class="swiper-slide"><img src="./assets/slider1.jpg" alt="Slide 1"  height=20px;/></div>
-      <div class="swiper-slide"><img src="./assets/slider2.jpg" alt="Slide 2" /></div>
-      <!-- Add more slides as needed -->
-    </div>
+      <!-- Slide 1 -->
+      <div class="swiper-slide">
+        <img src="./assets/slider1.jpg" alt="Promotional Banner 1" />
+        <div class="slider-content">
+          <h1>Make Your Brand Shine</h1>
+          <p>Print everything, beautifully. Fast. Reliable. Affordable.</p>
+          <a href="./catalog.html" class="motion-btn">Explore Products</a>
+        </div>
+      </div>
+      <!-- Slide 2 -->
+     <div class="swiper-slide">
+  <img src="./assets/slider2.jpg" alt="Promotional Banner 2" />
+  <div class="slider-content">
+    <h1>Custom T-Shirts & More</h1>
+    <p>Bring your design to life on high-quality products.</p>
+    <a href="./catalog.html" class="motion-btn">View Catalog</a>
   </div>
-  <div class="motion-content">
-    <h1 class="motion-heading">Creative Prints, Stunning Results</h1>
-    <p class="motion-subtitle">Make your brand shine with VistaPrint Demo</p>
-    <a href="./catalog.html" class="motion-btn">Explore Products</a>
+</div>
+
+    </div>
+
+    <!-- Optional controls -->
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-pagination"></div>
   </div>
 </section>
 
-<!-- Swiper JS -->
-<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-<script>
-  new Swiper('.swiper-container', {
-    loop: true,
-    autoplay: {
-      delay: 4000,
-    },
-    effect: 'fade',
-  });
-</script>
 
   
 <main>
@@ -121,9 +146,30 @@
 </main>
   <!-- 4. Footer -->
   <footer class="footer">
-  <p>© 2025 MyPrintShop | Contact: info@myprintshop.com</p>
+  <p>© 2025 MyPrintShop | Contact : /p>
 </footer>
 
+<!-- Existing swiper scripts -->
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+<!-- Init Swiper here -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const swiper = new Swiper(".swiper", {
+      loop: true,
+      autoplay: {
+        delay: 4000,
+      },
+      pagination: {
+        el: ".swiper-pagination",
+      },
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+    });
+  });
+</script>
 
 </body>
 </html>

@@ -153,11 +153,11 @@ body {
 }
 --------------------------------------------------
 /* Animate motion content on load */
-.motion-content {
+/*.motion-content {
   opacity: 0;
   transform: translateY(40px);
   animation: fadeInUp 1.5s ease-out forwards;
-  animation-delay: 0.5s;  */
+  animation-delay: 0.5s;  
 }
 
 @keyframes fadeInUp {
@@ -182,68 +182,68 @@ body {
 .motion-content {
   position: relative;
   z-index: 2;
-}
+}*/
 -------------------------------------------------------
 
-.slider-container {
+.motion-slider {
   position: relative;
-  height: 90vh;
   overflow: hidden;
+  height: 70vh;
 }
 
-.slider {
+.swiper-slide {
   position: relative;
   width: 100%;
   height: 100%;
 }
 
-.slide {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  transition: opacity 1s ease;
-}
-
-.slide.active {
-  opacity: 1;
-  z-index: 1;
-}
-
-.slide img {
+.swiper-slide img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  position: absolute;
-  z-index: 0;
 }
 
-.motion-content {
+.slider-content {
   position: absolute;
   top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  z-index: 2;
-  color: #fff;
+  left: 8%;
+  transform: translateY(-50%);
+  color: white;
+  max-width: 500px;
 }
 
-.motion-heading {
+.slider-content h1 {
   font-size: 2.5rem;
   margin-bottom: 1rem;
+  color: indigo;
 }
 
-.motion-subtitle {
+.slider-content p {
   font-size: 1.2rem;
   margin-bottom: 1.5rem;
+  color: #004080
 }
 
 .motion-btn {
-  padding: 10px 25px;
-  font-size: 1rem;
-  background: #ff5722;
-  color: white;
-  border: none;
-  border-radius: 30px;
+  display: inline-block;
+  padding: 10px 20px;
+  background: #0077cc;
+  color: #fff;
+  border-radius: 4px;
   text-decoration: none;
+}
+
+@media (max-width: 768px) {
+  .slider-content {
+    left: 5%;
+    max-width: 90%;
+  }
+
+  .slider-content h1 {
+    font-size: 1.8rem;
+  }
+
+  .slider-content p {
+    font-size: 1rem;
+  }
 }
