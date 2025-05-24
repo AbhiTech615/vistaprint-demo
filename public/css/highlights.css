@@ -43,3 +43,38 @@
     grid-template-columns: 1fr;
   }
 }
+.memory-banner {
+  background-color: #f5f5f5; /* Light gray background */
+  padding: 3rem 1rem;
+  text-align: center;
+  margin: 3rem 0;
+  border-radius: 12px;
+}
+
+.memory-banner-content h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.memory-banner-content p {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+  color: #555;
+}
+
+.memory-banner-btn {
+  display: inline-block;
+  background-color: #333;
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.memory-banner-btn:hover {
+  background-color: #555;
+}
