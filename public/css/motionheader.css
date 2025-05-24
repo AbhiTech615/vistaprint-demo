@@ -186,6 +186,8 @@ body {
 -------------------------------------------------------
 
 .motion-slider {
+  margin-bottom: 0;
+  padding-bottom: 0;
   position: relative;
   overflow: hidden;
   height: 70vh;
