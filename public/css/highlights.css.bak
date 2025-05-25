@@ -9,19 +9,20 @@
 }
 
 .grid {
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 columns */
   gap: 1.5rem;
-  flex-wrap: wrap;
+  padding: 1rem;
 }
 
 .card {
   background-color: #f4f4f4;
   border-radius: 8px;
   overflow: hidden;
-  width: 300px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
+
 
 .card img {
   width: 100%;
@@ -30,4 +31,15 @@
 
 .card h3 {
   padding: 1rem;
+}
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
 }

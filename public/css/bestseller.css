@@ -1,0 +1,38 @@
+.best-sellers {
+  padding: 2rem;
+  text-align: center;
+}
+
+.best-sellers h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.best-seller-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1.5rem;
+  justify-items: center;
+}
+
+.best-seller-card {
+  text-align: center;
+}
+
+.best-seller-card img {
+  width: 140px;
+  height: 140px;
+  /* border-radius: 50%; */
+  object-fit: cover;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition: transform 0.3s ease;
+}
+
+.best-seller-card img:hover {
+  transform: scale(1.05);
+}
+
+.best-seller-card h3 {
+  margin-top: 0.75rem;
+  font-size: 1rem;
+}
