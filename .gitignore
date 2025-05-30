@@ -3,3 +3,21 @@ node_modules/
 dist/
 build/
 *.log
+
+# Node modules
+node_modules/
+
+# Environment files
+.env
+*.env.bak
+
+# Backup files
+*.bak
+
+# VSCode settings (if any)
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
