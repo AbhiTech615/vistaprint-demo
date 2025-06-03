@@ -25,17 +25,27 @@ app.use(async (req, res, next) => {
 });
 
 // ─── 2) Global Middleware ───────────────────────────────────────────────────────
+const MongoStore = require('connect-mongo');
+
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || 'change_this_to_long_secret',
+    // use the same MongoDB URI you already have in .env
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGODB_URI,
+      // Optional settings:
+      collectionName: 'sessions',   // the collection in your DB where sessions are stored
+      ttl: 24 * 60 * 60,            // session lifetime in seconds (1 day)
+    }),
+    secret: process.env.SESSION_SECRET || 'change_this_to_a_long_secret',
     resave: false,
     saveUninitialized: false,
     cookie: { secure: false, maxAge: 24 * 60 * 60 * 1000 } // 1 day
   })
 );
+
 
 // ─── 3) Protect admin/dashboard.html and admin/users.html ──────────────────────
 //    If the admin is not logged in (no req.session.admin), redirect to login.
