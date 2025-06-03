@@ -51,5 +51,42 @@ function showNextSlide() {
 
 setInterval(showNextSlide, 5000); // change slide every 5 seconds
  45c044b (WIP: prepare for rebase before push)
+ 
+ // public/js/main.js
+
+// …existing code…
+
+window.addEventListener('DOMContentLoaded', () => {
+  const listEl = document.getElementById('userList');
+  if (!listEl) return;
+
+  fetch('/users')
+    .then(res => {
+      if (!res.ok) throw new Error('Network response was not OK');
+      return res.json();
+    })
+    .then(users => {
+      if (users.length === 0) {
+        const li = document.createElement('li');
+        li.textContent = 'No users found.';
+        listEl.appendChild(li);
+        return;
+      }
+      users.forEach(u => {
+        const li = document.createElement('li');
+        const joinedDate = new Date(u.joined).toLocaleString();
+        li.textContent = `${u.name} (${u.email}) — joined: ${joinedDate}`;
+        listEl.appendChild(li);
+      });
+    })
+    .catch(err => {
+      console.error('Error fetching users:', err);
+      const li = document.createElement('li');
+      li.textContent = 'Failed to load users.';
+      li.style.color = 'red';
+      listEl.appendChild(li);
+    });
+});
+
 
 

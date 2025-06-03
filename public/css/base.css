@@ -57,3 +57,18 @@ body {
 /* Product Page Layout */
 /* Cart Page */
 /* Checkout Page */
+
+.user-list-section {
+  margin: 2rem 1rem;
+}
+.user-list {
+  list-style: none;
+  padding: 0;
+}
+.user-list li {
+  background: #f5f5f5;
+  margin-bottom: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  font-family: Arial, sans-serif;
+}

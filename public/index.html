@@ -29,6 +29,8 @@
 
 
   <!-- Add other CSS files as needed -->
+  
+
 </head>
 <body>  
   <header class="motion-navbar">
@@ -43,6 +45,8 @@
         <li><a href="./catalog.html">Catalog</a></li>
         <li><a href="./cart.html">Cart</a></li>
         <li><a href="./checkout.html">Checkout</a></li>
+		<li><a href="/admin/login.html">Admin Login</a></li>
+
       </ul>
     </nav>
   </header>
@@ -230,6 +234,12 @@
   </div>
 </section>
 
+  <section class="user-list-section">
+    <h2>All Users</h2>
+    <ul id="userList" class="user-list">
+      <!-- JavaScript will insert <li> items here -->
+    </ul>
+  </section>
 
 
 
@@ -263,5 +273,47 @@
 </script>
 
 
+  <!-- ─── Fetch and Render Users ───────────────────────────────────────────────── -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Find the <ul> where we’ll insert <li> items
+      const listEl = document.getElementById('userList');
+      if (!listEl) return;
+
+      // 2. Fetch from /users
+      fetch('/users')
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not OK');
+          }
+          return response.json();
+        })
+        .then(users => {
+          // 3. If there are no users, show a placeholder
+          if (users.length === 0) {
+            const li = document.createElement('li');
+            li.textContent = 'No users found.';
+            listEl.appendChild(li);
+            return;
+          }
+          // 4. For each user, create an <li>
+          users.forEach(u => {
+            const li = document.createElement('li');
+            const joinedDate = new Date(u.joined).toLocaleString();
+            li.textContent = `${u.name} (${u.email}) — joined: ${joinedDate}`;
+            listEl.appendChild(li);
+          });
+        })
+        .catch(err => {
+          console.error('Error fetching users:', err);
+          const li = document.createElement('li');
+          li.textContent = 'Failed to load users.';
+          li.style.color = 'red';
+          listEl.appendChild(li);
+        });
+    });
+  </script>
+  <!-- ────────────────────────────────────────────────────────────────────────────── -->
 </body>
 </html>
+
