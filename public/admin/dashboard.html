@@ -45,8 +45,8 @@
     </main>
   </div>
 
+  <!-- Client-side JS to fetch /users and populate the cards -->
   <script>
-    // Fetch total users & recent users from /users endpoint
     async function loadDashboardData() {
       try {
         const res = await fetch('/users');

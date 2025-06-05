@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Register</title>
+  <link rel="stylesheet" href="css/register.css" />
+</head>
+<body>
+  <div class="register-container">
+    <!-- If you want to show server-side error/success messages, you can insert a small banner here -->
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("error")) {
+        document.write(`
+          <div class="error-banner">
+            ${decodeURIComponent(params.get("error"))}
+          </div>
+        `);
+      }
+      if (params.get("success")) {
+        document.write(`
+          <div class="success-banner">
+            Admin account created successfully. <a href="/admin/login.html">Click here to log in.</a>
+          </div>
+        `);
+      }
+    </script>
+
+    <form id="registerForm" action="/admin/register" method="POST" class="register-form">
+      <h2 class="register-title">Admin Registration</h2>
+
+      <div id="clientError" class="error-banner" style="display: none;">
+        <!-- Filled in by client‐side JS if validation fails -->
+      </div>
+
+      <div class="input-group">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="you@example.com"
+          required
+        />
+      </div>
+
+      <div class="input-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="••••••••"
+          minlength="6"
+          required
+        />
+      </div>
+
+      <div class="input-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <input
+          type="password"
+          id="confirmPassword"
+          name="confirmPassword"
+          placeholder="••••••••"
+          minlength="6"
+          required
+        />
+      </div>
+
+      <button type="submit" class="btn-register">Register</button>
+
+      <p class="login-link">
+        Already have an account? <a href="/admin/login.html">Log In</a>
+      </p>
+    </form>
+  </div>
+
+  <script>
+    document
+      .getElementById("registerForm")
+      .addEventListener("submit", function (e) {
+        const email = document.getElementById("email").value.trim();
+        const pass = document.getElementById("password").value;
+        const confirm = document.getElementById("confirmPassword").value;
+        const clientErr = document.getElementById("clientError");
+
+        // Reset banner
+        clientErr.style.display = "none";
+        clientErr.textContent = "";
+
+        // Basic client-side validation
+        if (!email || !pass || !confirm) {
+          e.preventDefault();
+          clientErr.textContent = "All fields are required.";
+          clientErr.style.display = "block";
+          return;
+        }
+        if (pass.length < 6) {
+          e.preventDefault();
+          clientErr.textContent = "Password must be at least 6 characters.";
+          clientErr.style.display = "block";
+          return;
+        }
+        if (pass !== confirm) {
+          e.preventDefault();
+          clientErr.textContent = "Passwords do not match.";
+          clientErr.style.display = "block";
+          return;
+        }
+        // If validation passes, allow form to submit
+      });
+  </script>
+</body>
+</html>
