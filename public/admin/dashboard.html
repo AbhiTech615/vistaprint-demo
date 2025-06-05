@@ -1,3 +1,84 @@
-<form id="loginForm" action="/admin/login" method="post">
-  <!-- ... -->
-</form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="css/dashboard.css" />
+</head>
+<body>
+  <div class="dashboard-wrapper">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h2>Your App</h2>
+      </div>
+      <nav class="sidebar-nav">
+        <ul>
+          <li><a href="/admin/dashboard.html" class="active">Dashboard</a></li>
+          <li><a href="/admin/users.html">Manage Users</a></li>
+          <li><a href="/admin/logout">Logout</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Top Bar -->
+      <header class="topbar">
+        <h1>Dashboard</h1>
+      </header>
+
+      <!-- Dashboard Cards / Info -->
+      <section class="cards-section">
+        <div class="card">
+          <h3>Total Users</h3>
+          <p id="totalUsers">Loading…</p>
+        </div>
+        <div class="card">
+          <h3>Recent Signups</h3>
+          <ul id="recentUsers">
+            <li>Loading…</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // Fetch total users & recent users from /users endpoint
+    async function loadDashboardData() {
+      try {
+        const res = await fetch('/users');
+        const users = await res.json();
+
+        // Total users
+        document.getElementById('totalUsers').textContent = users.length;
+
+        // Show last 5 joined (sorted by 'joined' descending)
+        const sorted = users
+          .slice()
+          .sort((a, b) => new Date(b.joined) - new Date(a.joined))
+          .slice(0, 5);
+        const list = document.getElementById('recentUsers');
+        list.innerHTML = '';
+        if (sorted.length === 0) {
+          list.innerHTML = '<li>No recent signups</li>';
+        } else {
+          sorted.forEach((u) => {
+            const li = document.createElement('li');
+            li.textContent = u.name + ' (' + new Date(u.joined).toLocaleDateString() + ')';
+            list.appendChild(li);
+          });
+        }
+      } catch (err) {
+        console.error('Error loading dashboard data:', err);
+        document.getElementById('totalUsers').textContent = 'Error';
+        document.getElementById('recentUsers').innerHTML = '<li>Could not load</li>';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', loadDashboardData);
+  </script>
+</body>
+</html>
