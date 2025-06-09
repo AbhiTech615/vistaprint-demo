@@ -2,70 +2,74 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Shopping Cart</title>
-  <link rel="stylesheet" href="style.css" />
-  <style>
-    .cart-container {
-      max-width: 800px;
-      margin: 50px auto;
-      padding: 20px;
-      background-color: #fff;
-      border-radius: 10px;
-    }
-    .cart-item {
-      display: flex;
-      justify-content: space-between;
-      padding: 15px 0;
-      border-bottom: 1px solid #ccc;
-    }
-    .cart-item:last-child {
-      border-bottom: none;
-    }
-    .cart-item span {
-      width: 25%;
-    }
-    .cart-summary {
-      text-align: right;
-      margin-top: 20px;
-      font-size: 18px;
-      font-weight: bold;
-    }
-    .checkout-btn {
-      display: inline-block;
-      padding: 10px 20px;
-      background-color: #0066cc;
-      color: white;
-      text-decoration: none;
-      border-radius: 5px;
-      margin-top: 20px;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cart | MyPrintShop</title>
+  <link rel="stylesheet" href="css/cart.css" />
 </head>
 <body>
-  <div class="cart-container">
-    <h2>Your Shopping Cart</h2>
-
-    <div class="cart-item">
-      <span>Visiting Cards</span>
-      <span>Qty: 2</span>
-      <span>₹100 each</span>
-      <span>₹200</span>
+  <!-- ===== 1. Header & Navigation ===== -->
+  <header class="site-header">
+    <div class="container header-content">
+      <div class="logo">
+        <a href="index.html">
+          <img src="assets/logo.png" alt="MyPrintShop Logo" />
+        </a>
+      </div>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="catalog.html">Catalog</a></li>
+          <li class="active"><a href="cart.html">Cart</a></li>
+          <li><a href="checkout.html">Checkout</a></li>
+          <li><a href="admin-login.html">Admin Login</a></li>
+        </ul>
+      </nav>
     </div>
+  </header>
 
-    <div class="cart-item">
-      <span>Mugs</span>
-      <span>Qty: 1</span>
-      <span>₹250</span>
-      <span>₹250</span>
+  <!-- ===== 2. Breadcrumb & Page Title ===== -->
+  <section class="breadcrumb-section">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="index.html">Home</a> <span class="sep">/</span>
+        <span class="current">Cart</span>
+      </nav>
+      <h1 class="page-title">Your Shopping Cart</h1>
     </div>
+  </section>
 
-    <div class="cart-summary">
-      Total: ₹450
-    </div>
+  <!-- ===== 3. Main Content ===== -->
+  <main class="cart-main container">
+    <!-- If the cart is empty: -->
+    <!--
+    <section class="empty-cart">
+      <img src="assets/empty-cart-illustration.png" alt="Empty Cart" class="empty-illustration" />
+      <h2>Your cart is currently empty.</h2>
+      <a href="catalog.html" class="btn btn-primary">Continue Shopping</a>
+    </section>
+    -->
 
-    <a href="checkout.html" class="checkout-btn">Proceed to Checkout</a>
-	
-  </div>
-</body>
-</html>
+    <!-- If there are items in the cart: -->
+    <div class="cart-content">
+      <!-- 3a. Cart Table (Desktop) -->
+      <table class="cart-table">
+        <thead>
+          <tr>
+            <th class="col-product">Product</th>
+            <th class="col-price">Unit Price</th>
+            <th class="col-qty">Quantity</th>
+            <th class="col-total">Line Total</th>
+            <th class="col-remove"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Example Cart Row #1 -->
+          <tr class="cart-item">
+            <td class="col-product">
+              <div class="product-info">
+                <img src="assets/business-card-thumb.jpg" alt="Business Cards" class="product-thumb" />
+                <div class="product-details">
+                  <h3 class="product-name">Business Cards (Pack of 100)</h3>
+                  <p class="product-options">50lb Matte • Double‐Sided</p>
+                </div>
+              </div>

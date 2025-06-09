@@ -1,7 +1,267 @@
-.catalog {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  padding: 20px;
-  justify-content: center;
+/* catalog.css */
+
+/* 1. Reset & Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
+body {
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  color: #333;
+  background-color: #fafafa;
+  line-height: 1.6;
+}
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* 2. Header & Navigation */
+.site-header {
+  background-color: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 1rem 0;
+}
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.site-header .logo img {
+  max-height: 50px;
+}
+.main-nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+.main-nav ul li a {
+  color: #555;
+  text-decoration: none;
+  font-weight: 500;
+}
+.main-nav ul li.active a {
+  color: #000;
+  border-bottom: 2px solid #000;
+}
+.main-nav ul li a:hover {
+  color: #000;
+}
+
+/* 3. Breadcrumb & Page Title */
+.breadcrumb-section {
+  background-color: #f5f5f5;
+  padding: 1rem 0;
+  margin-bottom: 2rem;
+}
+.breadcrumb {
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+.breadcrumb a {
+  color: #0073e6;
+  text-decoration: none;
+}
+.breadcrumb a:hover {
+  text-decoration: underline;
+}
+.breadcrumb .sep {
+  margin: 0 0.5rem;
+  color: #888;
+}
+.page-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #222;
+}
+
+/* 4. Two‐Column Layout (Sidebar + Products Grid) */
+.catalog-main {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+.filters-sidebar {
+  width: 25%;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  padding: 1rem;
+  border-radius: 4px;
+  position: sticky;
+  top: 100px; /* Sticks below header as user scrolls */
+}
+.filters-sidebar h2 {
+  font-size: 1.2rem;
+  margin-bottom: 0.75rem;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 0.5rem;
+}
+.category-list,
+.price-list {
+  list-style: none;
+}
+.category-list li,
+.price-list li {
+  margin: 0.5rem 0;
+}
+.category-list li a,
+.price-list li a {
+  color: #555;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+.category-list li a:hover,
+.price-list li a:hover {
+  color: #000;
+}
+
+/* 5. Product Grid */
+.products-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+.product-card {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+.product-card a {
+  color: inherit;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.product-img {
+  width: 100%;
+  padding-top: 75%; /* 4:3 ratio placeholder */
+  position: relative;
+  overflow: hidden;
+}
+.product-img img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.product-info {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-between;
+}
+.product-info h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+.product-info .price {
+  font-size: 0.95rem;
+  color: #777;
+  margin-bottom: 1rem;
+}
+.product-info .btn {
+  align-self: flex-start;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+.btn-primary {
+  background-color: #0073e6;
+  color: #fff;
+}
+.btn-primary:hover {
+  background-color: #005bb5;
+}
+
+/* 6. Pagination */
+.pagination-container {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+.pagination {
+  list-style: none;
+  display: inline-flex;
+  gap: 0.5rem;
+}
+.pagination .page-item {
+  padding: 0.5rem 0.75rem;
+}
+.pagination .page-item a,
+.pagination .page-item span {
+  display: block;
+  padding: 0.4rem 0.8rem;
+  color: #0073e6;
+  text-decoration: none;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+}
+.pagination .page-item.disabled span,
+.pagination .page-item.active span {
+  background-color: #0073e6;
+  color: #fff;
+  border-color: #0073e6;
+}
+.pagination .page-item a:hover {
+  background-color: #f0f0f0;
+}
+
+/* 7. Footer */
+.site-footer {
+  background-color: #f5f5f5;
+  padding: 1.5rem 0;
+  text-align: center;
+  border-top: 1px solid #e0e0e0;
+}
+.site-footer p {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* ===========================
+   Responsive Breakpoints
+   =========================== */
+
+/* Small Screens (< 768px) */
+@media (max-width: 767px) {
+  .catalog-main {
+    display: block;
+  }
+  .filters-sidebar {
+    width: 100%;
+    margin-bottom: 1.5rem;
+    position: relative; /* Disable sticky */
+    top: auto;
+  }
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+}
+
+/* Medium Screens (768px – 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .catalog-main {
+    gap: 1rem;
+  }
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+}
+
+/* Large Screens (>= 1024px) */
+/* (No additional rules needed beyond the default 25%/75% split) */

@@ -1,77 +1,284 @@
-.checkout-container {
-  max-width: 480px;
-  margin: 2rem auto;
-  background: #fff;
-  padding: 1.8rem 2rem;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+/* checkout.css */
+
+/* 1. Reset & Base (if not already included globally) */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  color: #333;
+  background-color: #fafafa;
+  line-height: 1.6;
+}
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.checkout-container h2 {
-  text-align: center;
-  margin-bottom: 1.5rem;
+/* 2. Header & Navigation (same as catalog.css/cart.css) */
+.site-header {
+  background-color: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 1rem 0;
+}
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.site-header .logo img {
+  max-height: 50px;
+}
+.main-nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+.main-nav ul li a {
+  color: #555;
+  text-decoration: none;
+  font-weight: 500;
+}
+.main-nav ul li.active a {
+  color: #000;
+  border-bottom: 2px solid #000;
+}
+.main-nav ul li a:hover {
+  color: #000;
+}
+
+/* 3. Breadcrumb & Page Title */
+.breadcrumb-section {
+  background-color: #f5f5f5;
+  padding: 1rem 0;
+  margin-bottom: 2rem;
+}
+.breadcrumb {
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+.breadcrumb a {
+  color: #0073e6;
+  text-decoration: none;
+}
+.breadcrumb a:hover {
+  text-decoration: underline;
+}
+.breadcrumb .sep {
+  margin: 0 0.5rem;
+  color: #888;
+}
+.page-title {
+  font-size: 2rem;
+  font-weight: 700;
   color: #222;
 }
 
-.form-group {
-  margin-bottom: 1.3rem;
+/* 4. Main Checkout Layout */
+.checkout-main {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 3rem;
 }
 
+/* 4a. Checkout Form (Left Column) */
+.checkout-form {
+  flex: 2;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 1.5rem;
+}
+.form-section {
+  margin-bottom: 2rem;
+}
+.form-section h2 {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: #222;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 0.5rem;
+}
+.form-group {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+}
 .form-group label {
-  display: block;
   margin-bottom: 0.4rem;
+  font-size: 0.95rem;
+  color: #555;
+}
+.form-group input,
+.form-group select {
+  padding: 0.6rem 0.8rem;
+  font-size: 0.95rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.form-group input:focus,
+.form-group select:focus {
+  outline: 2px dashed #0073e6;
+  outline-offset: 2px;
+}
+
+/* 4b. Two‐Column Rows within Form */
+.form-row.two-col {
+  display: flex;
+  gap: 1rem;
+}
+.form-row.two-col .form-group {
+  flex: 1;
+}
+
+/* 4c. Place Order Button */
+.place-order-section {
+  text-align: right;
+}
+.btn-place-order {
+  padding: 0.8rem 1.6rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 4px;
+  background-color: #0073e6;
+  color: #fff;
+  cursor: pointer;
+}
+.btn-place-order:hover {
+  background-color: #005bb5;
+}
+
+/* 5. Order Summary Sidebar (Right Column) */
+.order-summary {
+  flex: 1;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 1.5rem;
+  height: fit-content;
+}
+.order-summary h2 {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: #222;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 0.5rem;
+}
+
+/* 5a. Summary Items List */
+.summary-items {
+  list-style: none;
+  margin-bottom: 1.5rem;
+}
+.summary-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+.item-thumb {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+}
+.item-details {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.item-name {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  color: #333;
+}
+.item-qty {
+  font-size: 0.85rem;
+  color: #777;
+  margin-bottom: 0.25rem;
+}
+.item-total {
+  font-size: 0.95rem;
   font-weight: 600;
   color: #333;
 }
 
-.required {
-  color: #e74c3c;
+/* 5b. Summary Totals */
+.summary-totals {
+  border-top: 1px solid #e0e0e0;
+  padding-top: 1rem;
 }
-
-input[type="text"],
-input[type="email"],
-textarea,
-select {
-  width: 100%;
-  padding: 0.55rem 0.75rem;
-  border: 1.5px solid #ccc;
-  border-radius: 4px;
-  font-size: 1rem;
-  transition: border-color 0.3s ease;
+.totals-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.95rem;
+  margin-bottom: 0.75rem;
 }
-
-input:focus,
-textarea:focus,
-select:focus {
-  border-color: #007bff;
-  outline: none;
+.totals-row span {
+  color: #555;
 }
-
-textarea {
-  resize: vertical;
-  min-height: 80px;
-}
-
-.btn-submit {
-  width: 100%;
-  background-color: #007bff;
-  border: none;
-  padding: 0.85rem 0;
-  color: #fff;
+.totals-row .amount {
   font-weight: 600;
-  font-size: 1.1rem;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  color: #333;
+}
+.grand-total {
+  font-size: 1.05rem;
+}
+.summary-totals hr {
+  border: none;
+  border-top: 1px solid #e0e0e0;
+  margin: 1rem 0;
 }
 
-.btn-submit:hover {
-  background-color: #0056b3;
+/* 5c. Edit Cart Link */
+.btn-edit-cart {
+  display: block;
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  color: #0073e6;
+  text-decoration: none;
+}
+.btn-edit-cart:hover {
+  text-decoration: underline;
 }
 
-@media (max-width: 600px) {
-  .checkout-container {
-    margin: 1rem;
-    padding: 1.5rem;
+/* 6. Responsive Breakpoints */
+
+/* Small Screens (< 768px) */
+@media (max-width: 767px) {
+  .checkout-main {
+    display: block;
+  }
+  .checkout-form,
+  .order-summary {
+    width: 100%;
+    margin-bottom: 2rem;
+  }
+  .form-row.two-col {
+    display: block;
+  }
+  .form-row.two-col .form-group {
+    width: 100%;
   }
 }
+
+/* Medium Screens (768px – 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .checkout-main {
+    flex-direction: column;
+  }
+  .checkout-form,
+  .order-summary {
+    width: 100%;
+    margin-bottom: 2rem;
+  }
+}
+
+/* Large Screens (>= 1024px) */
+/* Two‐column layout remains as defined above */

@@ -1,15 +1,26 @@
 // server.js
-const express = require('express');
-const path = require('path');
-const session = require('express-session');
+
+// 1) Dependencies
+const express       = require('express');
+const path          = require('path');
+const session       = require('express-session');
 const { MongoClient, ObjectId } = require('mongodb');
-const MongoStore = require('connect-mongo');
+const MongoStore    = require('connect-mongo');
 require('dotenv').config();
 
-const app = express();
-const PORT = process.env.PORT || 3000;
+// 2) Create the app
+const app   = express();
+const PORT  = process.env.PORT || 3000;
 
-// ─── A) Connect to MongoDB (must run before any route that uses req.app.locals.db) ───────────────
+// 3) View engine + static folders
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
+app.use('/css',    express.static(path.join(__dirname, 'css')));
+app.use('/assets', express.static(path.join(__dirname, 'assets')));
+app.use(express.static(path.join(__dirname, 'public')));
+
+// 4) Database connection helper
 let dbInstance;
 async function connectToDatabase() {
   if (dbInstance) return dbInstance;
@@ -19,10 +30,11 @@ async function connectToDatabase() {
   });
   await client.connect();
   console.log('✅ Connected to MongoDB Atlas');
-  dbInstance = client.db(); // uses the database name from MONGODB_URI (e.g. “vistaprintdb”)
+  dbInstance = client.db(); 
   return dbInstance;
 }
 
+// 5) Attach db to each request
 app.use(async (req, res, next) => {
   if (!req.app.locals.db) {
     try {
@@ -35,127 +47,140 @@ app.use(async (req, res, next) => {
   next();
 });
 
-// ─── B) Body parsing + Sessions ───────────────────────────────────────────────────
+// 6) Body parsing & sessions
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(
-  session({
-    store: MongoStore.create({
-      mongoUrl: process.env.MONGODB_URI,
-      collectionName: 'sessions',
-      ttl: 24 * 60 * 60, // 1 day
-    }),
-    secret: process.env.SESSION_SECRET || 'change_this_secret',
-    resave: false,
-    saveUninitialized: false,
-    cookie: { secure: false, maxAge: 24 * 60 * 60 * 1000 },
-  })
-);
+app.use(session({
+  store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI }),
+  secret: process.env.SESSION_SECRET || 'change_this_secret',
+  resave: false,
+  saveUninitialized: false,
+  cookie: { secure: false, maxAge: 24 * 60 * 60 * 1000 }
+}));
 
-// ─── C) Login guard ────────────────────────────────────────────────────────────
+// 7) Auth guard
 function ensureAdminLoggedIn(req, res, next) {
-  if (req.session && req.session.admin) {
-    return next();
-  }
+  if (req.session && req.session.admin) return next();
   return res.redirect('/admin/login.html');
 }
 
-// ─── D) Admin Login/Logout/Dashboard ──────────────────────────────────────────
+// 8) Admin routes
+app.get('/admin/login.html', (req, res) =>
+  res.sendFile(path.join(__dirname, 'public', 'admin', 'login.html'))
+);
 
-// 1) Serve the login form
-app.get('/admin/login.html', (req, res) => {
-  return res.sendFile(path.join(__dirname, 'public', 'admin', 'login.html'));
-});
-
-// 2) Handle login POST
 app.post('/admin/login', async (req, res) => {
   const { username, password } = req.body;
   if (!username || !password) {
-    return res.redirect(
-      '/admin/login.html?error=' + encodeURIComponent('Both fields are required.')
-    );
+    return res.redirect('/admin/login.html?error=Both fields required');
   }
-  try {
-    const adminUsers = req.app.locals.db.collection('admin_users');
-    const user = await adminUsers.findOne({ username });
-    if (!user || user.password !== password) {
-      return res.redirect(
-        '/admin/login.html?error=' + encodeURIComponent('Invalid username or password.')
-      );
-    }
-    // Successful login → set session and redirect
-    req.session.admin = user.username;
-    return res.redirect('/admin/dashboard.html');
-  } catch (err) {
-    console.error('POST /admin/login error:', err);
-    return res.status(500).send('Server error');
+  const user = await req.app.locals.db
+    .collection('admin_users')
+    .findOne({ username });
+  if (!user || user.password !== password) {
+    return res.redirect('/admin/login.html?error=Invalid credentials');
   }
+  req.session.admin = user.username;
+  res.redirect('/admin/dashboard.html');
 });
 
-// 3) Serve the protected dashboard
-app.get('/admin/dashboard.html', ensureAdminLoggedIn, (req, res) => {
-  return res.sendFile(path.join(__dirname, 'public', 'admin', 'dashboard.html'));
-});
+app.get('/admin/dashboard.html', ensureAdminLoggedIn, (req, res) =>
+  res.sendFile(path.join(__dirname, 'public', 'admin', 'dashboard.html'))
+);
 
-// 4) Handle logout
-app.get('/admin/logout', (req, res) => {
+app.get('/admin/logout', (req, res) =>
   req.session.destroy(() => {
     res.clearCookie('connect.sid');
-    return res.redirect('/admin/login.html');
+    res.redirect('/admin/login.html');
+  })
+);
+
+// 9) User API
+app.get('/users', async (req, res) => {
+  const users = await req.app.locals.db.collection('users').find().toArray();
+  res.json(users);
+});
+app.post('/users', async (req, res) => {
+  const { name, email } = req.body;
+  if (!name || !email) return res.status(400).json({ message: 'Name & email required' });
+  const result = await req.app.locals.db
+    .collection('users')
+    .insertOne({ name, email, joined: new Date() });
+  res.status(201).json({ _id: result.insertedId });
+});
+app.delete('/users/:id', async (req, res) => {
+  await req.app.locals.db
+    .collection('users')
+    .deleteOne({ _id: new ObjectId(req.params.id) });
+  res.sendStatus(204);
+});
+
+// 10) Product API
+app.get('/products', async (req, res) => {
+  const prods = await req.app.locals.db.collection('products').find().toArray();
+  res.json(prods);
+});
+app.get('/products/:id', async (req, res) => {
+  const prod = await req.app.locals.db
+    .collection('products')
+    .findOne({ _id: new ObjectId(req.params.id) });
+  if (!prod) return res.status(404).json({ message: 'Not found' });
+  res.json(prod);
+});
+
+// 11) Catalog route
+ const catalogRouter = require('./routes/catalog');
+ app.use('/catalog', catalogRouter);
+
+  app.get('/catalog', async (req, res) => {
+  // now await is valid here
+  const productsColl = req.app.locals.db.collection('products');
+  const { cat: categoryFilter, price: priceFilter, page = 1 } = req.query;
+  const currentPage = Math.max(parseInt(page, 10), 1);
+  const skip        = (currentPage - 1) * 8;
+
+  // Build query
+  const query = { is_active: true };
+  if (categoryFilter) query.category = categoryFilter;
+  if (priceFilter) {
+    if (priceFilter.endsWith('+')) {
+      query['price_range.min'] = { $gte: parseInt(priceFilter, 10) };
+    } else {
+      const [min, max] = priceFilter.split('-').map(Number);
+      query['price_range.min'] = { $gte: min };
+      query['price_range.max'] = { $lte: max };
+    }
+  }
+
+  const totalCount = await productsColl.countDocuments(query);
+  const totalPages = Math.ceil(totalCount / 8);
+  const products   = await productsColl
+    .find(query)
+    .sort({ created_at: -1 })
+    .skip(skip)
+    .limit(8)
+    .toArray();
+
+  let baseUrl = '/catalog?';
+  if (categoryFilter) baseUrl += `cat=${encodeURIComponent(categoryFilter)}&`;
+  if (priceFilter)    baseUrl += `price=${encodeURIComponent(priceFilter)}&`;
+
+  res.render('catalog', {
+    products,
+    currentPage,
+    totalPages,
+    categoryFilter,
+    priceFilter,
+    baseUrl
   });
 });
 
-// ─── E) API Routes for “users” ─────────────────────────────────────────────────
-
-// GET /users → returns all user documents (to feed the dashboard)
-app.get('/users', async (req, res) => {
-  try {
-    const users = await req.app.locals.db.collection('users').find({}).toArray();
-    return res.json(users);
-  } catch (err) {
-    console.error('GET /users error:', err);
-    return res.status(500).json({ message: 'Internal Server Error' });
-  }
-});
-
-// POST /users → insert a new user (used by a form or API somewhere)
-app.post('/users', async (req, res) => {
-  try {
-    const { name, email } = req.body;
-    if (!name || !email) {
-      return res.status(400).json({ message: 'Name and email are required.' });
-    }
-    const result = await req.app.locals.db
-      .collection('users')
-      .insertOne({ name, email, joined: new Date() });
-    return res.status(201).json({ _id: result.insertedId });
-  } catch (err) {
-    console.error('POST /users error:', err);
-    return res.status(500).json({ message: 'Internal Server Error' });
-  }
-});
-
-// DELETE /users/:id → remove a user by _id
-app.delete('/users/:id', async (req, res) => {
-  try {
-    const id = req.params.id;
-    await req.app.locals.db.collection('users').deleteOne({ _id: new ObjectId(id) });
-    return res.sendStatus(204);
-  } catch (err) {
-    console.error('DELETE /users/:id error:', err);
-    return res.status(500).json({ message: 'Internal Server Error' });
-  }
-});
-
-// ─── F) Serve static files (after all routes above) ───────────────────────────────
-app.use(express.static(path.join(__dirname, 'public')));
-
-// ─── G) 404 Handler (last) ─────────────────────────────────────────────────────────
+// 12) 404 handler
 app.use((req, res) => {
-  return res.status(404).sendFile(path.join(__dirname, 'public', '404.html'));
+  res.status(404).sendFile(path.join(__dirname, 'public', '404.html'));
 });
 
-// ─── H) Start server ────────────────────────────────────────────────────────────────
+// 13) Start server
 app.listen(PORT, () => {
-  console.log(`✅ Server is running at http://localhost:${PORT}`);
+  console.log(`✅ Server running at http://localhost:${PORT}`);
 });

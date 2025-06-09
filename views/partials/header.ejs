@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= pageTitle || 'MyPrintShop' %></title>
+  <link rel="stylesheet" href="/css/catalog.css" />
+  <!-- add other CSS links as needed -->
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-content">
+      <div class="logo">
+        <a href="/"><img src="/assets/logo.png" alt="MyPrintShop Logo" /></a>
+      </div>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li class="<%= activePage==='catalog'?'active':'' %>"><a href="/catalog">Catalog</a></li>
+          <li class="<%= activePage==='cart'?'active':'' %>"><a href="/cart">Cart</a></li>
+          <li class="<%= activePage==='checkout'?'active':'' %>"><a href="/checkout">Checkout</a></li>
+          <li><a href="/admin/login.html">Admin</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>

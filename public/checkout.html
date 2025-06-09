@@ -2,47 +2,188 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Checkout - Vistaprint Demo</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout | MyPrintShop</title>
+  <link rel="stylesheet" href="css/checkout.css" />
 </head>
 <body>
-  <div class="container checkout-container">
-    <h2>Checkout</h2>
-    <form action="/submit-order" method="POST">
-  <!-- your form fields -->
+  <!-- ===== 1. Header & Navigation ===== -->
+  <header class="site-header">
+    <div class="container header-content">
+      <div class="logo">
+        <a href="index.html">
+          <img src="assets/logo.png" alt="MyPrintShop Logo" />
+        </a>
+      </div>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="catalog.html">Catalog</a></li>
+          <li><a href="cart.html">Cart</a></li>
+          <li class="active"><a href="checkout.html">Checkout</a></li>
+          <li><a href="admin-login.html">Admin Login</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===== 2. Breadcrumb & Page Title ===== -->
+  <section class="breadcrumb-section">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="index.html">Home</a> <span class="sep">/</span>
+        <span class="current">Checkout</span>
+      </nav>
+      <h1 class="page-title">Checkout</h1>
+    </div>
+  </section>
+
+  <!-- ===== 3. Main Content ===== -->
+  <main class="checkout-main container">
+    <!-- Left Column: Checkout Form -->
+    <section class="checkout-form">
+      <!-- 3a. Billing Details -->
+      <div class="form-section">
+        <h2>Billing Details</h2>
+        <div class="form-group">
+          <label for="billing-name">Full Name</label>
+          <input type="text" id="billing-name" name="billing-name" placeholder="John Doe" required />
+        </div>
+        <div class="form-group">
+          <label for="billing-email">Email Address</label>
+          <input type="email" id="billing-email" name="billing-email" placeholder="john@example.com" required />
+        </div>
+        <div class="form-group">
+          <label for="billing-phone">Phone Number</label>
+          <input type="tel" id="billing-phone" name="billing-phone" placeholder="+91 98765 43210" required />
+        </div>
+      </div>
+
+      <!-- 3b. Shipping Address -->
+      <div class="form-section">
+        <h2>Shipping Address</h2>
+        <div class="form-group">
+          <label for="shipping-address1">Address Line 1</label>
+          <input type="text" id="shipping-address1" name="shipping-address1" placeholder="123 Main St" required />
+        </div>
+        <div class="form-group">
+          <label for="shipping-address2">Address Line 2 (Optional)</label>
+          <input type="text" id="shipping-address2" name="shipping-address2" placeholder="Apartment, suite, etc. (optional)" />
+        </div>
+        <div class="form-row two-col">
+          <div class="form-group">
+            <label for="shipping-city">City</label>
+            <input type="text" id="shipping-city" name="shipping-city" placeholder="Mumbai" required />
+          </div>
+          <div class="form-group">
+            <label for="shipping-state">State/Province</label>
+            <input type="text" id="shipping-state" name="shipping-state" placeholder="Maharashtra" required />
+          </div>
+        </div>
+        <div class="form-row two-col">
+          <div class="form-group">
+            <label for="shipping-zip">ZIP/Postal Code</label>
+            <input type="text" id="shipping-zip" name="shipping-zip" placeholder="400001" required />
+          </div>
+          <div class="form-group">
+            <label for="shipping-country">Country</label>
+            <select id="shipping-country" name="shipping-country" required>
+              <option value="" disabled selected>Select Country</option>
+              <option value="in">India</option>
+              <option value="us">United States</option>
+              <option value="ca">Canada</option>
+              <!-- Add more countries as needed -->
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3c. Payment Method -->
+      <div class="form-section">
+        <h2>Payment Method</h2>
+        <div class="form-group">
+          <label for="card-name">Name on Card</label>
+          <input type="text" id="card-name" name="card-name" placeholder="John Doe" required />
+        </div>
+        <div class="form-group">
+          <label for="card-number">Card Number</label>
+          <input type="text" id="card-number" name="card-number" placeholder="xxxx xxxx xxxx xxxx" maxlength="19" required />
+        </div>
+        <div class="form-row two-col">
+          <div class="form-group">
+            <label for="card-expiry">Expiry (MM/YY)</label>
+            <input type="text" id="card-expiry" name="card-expiry" placeholder="MM/YY" maxlength="5" required />
+          </div>
+          <div class="form-group">
+            <label for="card-cvv">CVV</label>
+            <input type="text" id="card-cvv" name="card-cvv" placeholder="123" maxlength="3" required />
+          </div>
+        </div>
+      </div>
+
+      <!-- 3d. Place Order Button -->
+      <div class="form-section place-order-section">
+        <button type="submit" class="btn btn-primary btn-place-order">Place Order</button>
+      </div>
+    </section>
+
+    <!-- Right Column: Order Summary Sidebar -->
+    <aside class="order-summary">
+      <h2>Order Summary</h2>
+      <ul class="summary-items">
+        <!-- Example Item #1 -->
+        <li class="summary-item">
+          <img src="assets/business-card-thumb.jpg" alt="Business Cards" class="item-thumb" />
+          <div class="item-details">
+            <p class="item-name">Business Cards (100 pcs)</p>
+            <p class="item-qty">Qty: 1</p>
+            <p class="item-total">₹299.00</p>
+          </div>
+        </li>
+        <!-- Example Item #2 -->
+        <li class="summary-item">
+          <img src="assets/custom-mug-thumb.jpg" alt="Custom Mug" class="item-thumb" />
+          <div class="item-details">
+            <p class="item-name">Custom Mug</p>
+            <p class="item-qty">Qty: 2</p>
+            <p class="item-total">₹498.00</p>
+          </div>
+        </li>
+        <!-- Repeat for each cart item -->
+      </ul>
+
+      <div class="summary-totals">
+        <div class="totals-row">
+          <span>Subtotal</span>
+          <span class="amount">₹797.00</span>
+        </div>
+        <div class="totals-row">
+          <span>Estimated Tax</span>
+          <span class="amount">₹143.46</span>
+        </div>
+        <div class="totals-row">
+          <span>Shipping</span>
+          <span class="amount">Calculated at Checkout</span>
+        </div>
+        <hr />
+        <div class="totals-row grand-total">
+          <span>Grand Total</span>
+          <span class="amount">₹940.46</span>
+        </div>
+      </div>
+
+      <a href="cart.html" class="btn btn-link btn-edit-cart">Edit Cart</a>
+    </aside>
+  </main>
+
+  <!-- ===== 4. Footer ===== -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2025 MyPrintShop  |  Contact: +91-XXX-XXXXXXX  |  support@myprintshop.com</p>
+    </div>
+  </footer>
   
-
-      <div class="form-group">
-        <label for="fullname">Full Name <span class="required">*</span></label>
-        <input type="text" id="fullname" name="fullname" placeholder="John Doe" required />
-      </div>
-
-      <div class="form-group">
-        <label for="email">Email Address <span class="required">*</span></label>
-        <input type="email" id="email" name="email" placeholder="john@example.com" required />
-      </div>
-
-      <div class="form-group">
-        <label for="address">Shipping Address <span class="required">*</span></label>
-        <textarea id="address" name="address" placeholder="123 Main St, City, State" required></textarea>
-      </div>
-
-      <div class="form-group">
-        <label for="payment">Payment Method <span class="required">*</span></label>
-        <select id="payment" name="payment" required>
-          <option value="">Select a payment method</option>
-          <option value="credit-card">Credit Card</option>
-          <option value="debit-card">Debit Card</option>
-          <option value="netbanking">Net Banking</option>
-          <option value="cod">Cash on Delivery</option>
-        </select>
-      </div>
-
-      <button type="submit" class="btn-submit">Place Order</button>
-    </form>
-  </div>
-  <script>
+    <script>
   function validateForm() {
     const name = document.forms["checkoutForm"]["name"].value.trim();
     const email = document.forms["checkoutForm"]["email"].value.trim();
@@ -68,3 +209,15 @@
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+  
+

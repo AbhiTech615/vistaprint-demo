@@ -1,43 +1,144 @@
-<!-- public/catalog.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Product Catalog</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Catalog | MyPrintShop</title>
+  <link rel="stylesheet" href="css/catalog.css" />
 </head>
 <body>
-  <header>
-    <h1>Our Products</h1>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="catalog.html">Catalog</a>
-    </nav>
+  <!-- ===== 1. Header & Navigation ===== -->
+  <header class="site-header">
+    <div class="container header-content">
+      <div class="logo">
+        <a href="index.html">
+          <img src="assets/logo.png" alt="MyPrintShop Logo" />
+        </a>
+      </div>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li class="active"><a href="catalog.html">Catalog</a></li>
+          <li><a href="cart.html">Cart</a></li>
+          <li><a href="checkout.html">Checkout</a></li>
+          <li><a href="admin/login.html">Admin Login</a></li>
+        </ul>
+      </nav>
+      <!-- Optional: Search bar -->
+      <!-- <div class="search-bar">
+        <input type="text" placeholder="Search products..." />
+        <button type="submit">🔍</button>
+      </div> -->
+    </div>
   </header>
 
-<section class="catalog">
-  <!-- Product Card with link -->
-  <a href="product.html" class="product">
-    <img src="https://via.placeholder.com/150" alt="Product 1">
-    <h3>Business Cards</h3>
-    <p>High-quality business cards for your brand.</p>
-	<a href="product.html">View Details</a>
-
-  </a>
-</section>
-
-    
-
-    <div class="product-card">
-      <img src="images/mug.jpg" alt="Custom Mugs">
-      <h2>Custom Mugs</h2>
-      <p>Starting at ₹149</p>
-      <button>Customize</button>
+  <!-- ===== 2. Breadcrumb & Page Title ===== -->
+  <section class="breadcrumb-section">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="index.html">Home</a> <span class="sep">/</span>
+        <span class="current">Catalog</span>
+      </nav>
+      <h1 class="page-title">Our Products</h1>
     </div>
-
-    <!-- Add more products here -->
   </section>
+
+  <!-- ===== 3. Hero (Optional) ===== -->
+  <!-- If you have a banner image:
+  <section class="catalog-hero">
+    <img src="assets/catalog-banner.jpg" alt="Catalog Banner" />
+  </section>
+  -->
+
+  <!-- ===== 4. Main Content ===== -->
+  <main class="catalog-main container">
+    <aside class="filters-sidebar">
+      <h2>Categories</h2>
+      <ul class="category-list">
+        <li><a href="catalog.html?cat=business-cards">Business Cards</a></li>
+        <li><a href="catalog.html?cat=t-shirts">T-Shirts</a></li>
+        <li><a href="catalog.html?cat=mugs">Mugs</a></li>
+        <li><a href="catalog.html?cat=flyers">Flyers</a></li>
+        <li><a href="catalog.html?cat=photo-prints">Photo Prints</a></li>
+        <li><a href="catalog.html?cat=embellishments">Embellishments</a></li>
+      </ul>
+
+      <h2>Price Range</h2>
+      <!-- Example: a simple list of “Starting at ₹X” -->
+      <ul class="price-list">
+        <li><a href="catalog.html?price=0-199">Starting at ₹149</a></li>
+        <li><a href="catalog.html?price=200-499">₹200 – ₹499</a></li>
+        <li><a href="catalog.html?price=500-999">₹500 – ₹999</a></li>
+        <li><a href="catalog.html?price=1000+">₹1000 &amp; Above</a></li>
+      </ul>
+
+      <!-- You could add checkboxes or custom sliders here if desired -->
+    </aside>
+
+    <section class="products-grid">
+      <!-- Example Product Card #1 -->
+      <article class="product-card">
+        <a href="product-detail.html?id=business-card">
+          <div class="product-img">
+            <img src="assets/business-card-thumb.jpg" alt="Business Cards" />
+          </div>
+          <div class="product-info">
+            <h3>Business Cards</h3>
+            <p class="price">Starting at ₹199</p>
+            <button class="btn btn-primary">View Details</button>
+          </div>
+        </a>
+      </article>
+
+      <!-- Example Product Card #2 -->
+      <article class="product-card">
+        <a href="product-detail.html?id=custom-mugs">
+          <div class="product-img">
+            <img src="assets/custom-mug-thumb.jpg" alt="Custom Mugs" />
+          </div>
+          <div class="product-info">
+            <h3>Custom Mugs</h3>
+            <p class="price">Starting at ₹149</p>
+            <button class="btn btn-primary">Customize</button>
+          </div>
+        </a>
+      </article>
+	   <!-- Example Product Card #1 -->
+      <article class="product-card">
+        <a href="product-detail.html?id=business-card">
+          <div class="product-img">
+            <img src="assets/business-card-thumb.jpg" alt="Business Cards" />
+          </div>
+          <div class="product-info">
+            <h3>Business Cards</h3>
+            <p class="price">Starting at ₹199</p>
+            <button class="btn btn-primary">View Details</button>
+          </div>
+        </a>
+      </article>
+
+
+      <!-- Repeat as needed for all product categories (T-Shirts, Flyers, etc.) -->
+      <!-- You can generate these cards dynamically using server‐side rendering or JS -->
+    </section>
+  </main>
+
+  <!-- ===== 5. Pagination / Load More ===== -->
+  <nav class="pagination-container">
+    <ul class="pagination">
+      <li class="page-item disabled"><span>« Previous</span></li>
+      <li class="page-item"><a href="?page=1">1</a></li>
+      <li class="page-item active"><span>2</span></li>
+      <li class="page-item"><a href="?page=3">3</a></li>
+      <li class="page-item"><a href="?page=3">Next »</a></li>
+    </ul>
+  </nav>
+
+  <!-- ===== 6. Footer ===== -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2025 MyPrintShop  |  Contact: +91-XXX-XXXXXXX  |  support@myprintshop.com</p>
+    </div>
+  </footer>
 </body>
 </html>
-
