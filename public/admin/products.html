@@ -8,126 +8,248 @@
 </head>
 <body>
   <div class="products-wrapper">
+    <!-- Sidebar -->
     <aside class="sidebar">
-      <!-- reuse your dashboard sidebar -->
       <div class="sidebar-header"><h2>Admin Panel</h2></div>
       <nav class="sidebar-nav">
         <ul>
-          <li><a href="/admin/dashboard.html">Dashboard</a></li>
-          <li><a href="/admin/users.html">Manage Users</a></li>
-          <li><a href="/admin/products.html" class="active">Manage Products</a></li>
+          <li><a href="/admin/dashboard">Dashboard</a></li>
+          <li><a href="/admin/users">Manage Users</a></li>
+          <li><a href="/admin/products" class="active">Manage Products</a></li>
           <li><a href="/admin/logout">Logout</a></li>
         </ul>
       </nav>
     </aside>
+
+    <!-- Main -->
     <main class="main-content">
       <header class="topbar">
         <h1>Products</h1>
         <button id="btnAddProduct">+ Add Product</button>
       </header>
+	    <!-- FILTER BAR -->
+			  <div class="filters">
+			  Category:
+			  <select id="categoryFilter">
+				<option value="">All Categories</option>
+			  </select>
+			  Status:
+			  <select id="statusFilter">
+				<option value="">All</option>
+				<option value="active">Active</option>
+				<option value="inactive">Inactive</option>
+			  </select>
+			</div>
+
+			<table id="productsTable">
+			  <thead>
+				<tr>
+				  <th>Thumb</th>
+				  <th>Name</th>
+				  <th>Starting Price</th>
+				  <th>Active?</th>
+				  <th>Actions</th>
+				</tr>
+			  </thead>
+			  <tbody></tbody>
+			</table>
+
+    <!------------------------------------------->
+	
       <table id="productsTable">
         <thead>
-          <tr><th>Name</th><th>Price</th><th>Actions</th></tr>
-        </thead>
-        <tbody><!-- rows go here --></tbody>
+		  <tr>
+			<th>Thumb</th>
+			<th>Name</th>
+			<th>Starting Price</th>
+			<th>Active?</th>
+			<th>Actions</th>
+		  </tr>
+		</thead>
+
+
+        <tbody></tbody>
       </table>
-      <!-- Modal for add/edit -->
+
+      <!-- Modal -->
       <div id="productModal" class="modal hidden">
         <form id="formProduct">
-          <h3 id="modalTitle">Add Product</h3>
-          <label>Name: <input type="text" name="name" required></label>
-          <label>Price: <input type="number" name="price" step="0.01" required></label>
-          <label>Image URL: <input type="text" name="imageUrl"></label>
-          <label>Description:<textarea name="description"></textarea></label>
-          <button type="submit">Save</button>
-          <button type="button" id="btnCancel">Cancel</button>
-        </form>
+		  <h3 id="modalTitle">Add Product</h3>
+		  <label>Name<input type="text"    name="name"     required /></label>
+		  <label>Price<input type="number" name="price"    required /></label>
+		  <label>Thumbnail URL<input type="text" name="thumbnail" /></label>
+		  <label>Category
+			<input list="categoryList" name="category" />
+			<datalist id="categoryList"></datalist>
+		  </label>
+		  <label>Description<textarea name="description"></textarea></label>
+		  <label>
+			Active
+			<input type="checkbox" name="isActive" checked />
+		  </label>
+		  <div class="modal-actions">
+			<button type="submit">Save</button>
+			<button type="button" id="btnCancel">Cancel</button>
+		  </div>
+		</form>
+
       </div>
     </main>
   </div>
+  
+<script>
+  const api = '/products';
+  let allProducts = [];
 
-  <script>
-    const api = '/products';
+  //
+  // 1) Modal control functions
+  //
+  function openModal(isEdit = false, data = {}) {
+    const modal = document.getElementById('productModal');
+    modal.classList.remove('hidden');
+    document.getElementById('modalTitle').textContent = isEdit ? 'Edit Product' : 'Add Product';
 
-    async function fetchProducts() {
-      const res = await fetch(api);
-      return res.json();
-    }
+    const form = document.getElementById('formProduct');
+    form.name.value        = data.name        || '';
+    form.price.value       = data.starting_price || '';
+    form.thumbnail.value   = data.thumbnail   || '';
+    form.category.value    = data.category    || '';
+    form.description.value = data.description || '';
+    form.dataset.id        = data._id         || '';
+  }
 
-    async function renderProducts() {
-      const products = await fetchProducts();
-      const tbody = document.querySelector('#productsTable tbody');
-      tbody.innerHTML = '';
-      products.forEach(p => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${p.name}</td>
-          <td>$${p.price.toFixed(2)}</td>
-          <td>
-            <button class="btnEdit" data-id="${p._id}">Edit</button>
-            <button class="btnDelete" data-id="${p._id}">Delete</button>
-          </td>`;
-        tbody.appendChild(tr);
-      });
-    }
-
-    function openModal(edit = false, data = {}) {
-      document.getElementById('productModal').classList.remove('hidden');
-      document.getElementById('modalTitle').textContent = edit ? 'Edit Product' : 'Add Product';
-      const form = document.getElementById('formProduct');
-      form.name.value = data.name || '';
-      form.price.value = data.price || '';
-      form.imageUrl.value = data.imageUrl || '';
-      form.description.value = data.description || '';
-      form.dataset.id = data._id || '';
-    }
-
-    function closeModal() {
-      document.getElementById('productModal').classList.add('hidden');
-    }
-
-    async function saveProduct(evt) {
-      evt.preventDefault();
-      const form = evt.target;
-      const id = form.dataset.id;
-      const payload = {
-        name: form.name.value,
-        price: parseFloat(form.price.value),
-        imageUrl: form.imageUrl.value,
-        description: form.description.value
-      };
-      const opts = {
-        method: id ? 'PUT' : 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      };
-      const url = id ? `${api}/${id}` : api;
-      await fetch(url, opts);
-      closeModal();
-      renderProducts();
-    }
-
-    async function deleteProduct(id) {
-      if (!confirm('Delete this product?')) return;
-      await fetch(`${api}/${id}`, { method: 'DELETE' });
-      renderProducts();
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      renderProducts();
-      document.getElementById('btnAddProduct').onclick = () => openModal();
-      document.getElementById('btnCancel').onclick = closeModal;
-      document.getElementById('formProduct').onsubmit = saveProduct;
-      document.querySelector('#productsTable tbody').onclick = e => {
-        if (e.target.matches('.btnEdit')) {
-          const id = e.target.dataset.id;
-          fetch(`${api}/${id}`).then(res => res.json()).then(openModal.bind(null, true));
-        }
-        if (e.target.matches('.btnDelete')) {
-          deleteProduct(e.target.dataset.id);
-        }
-      };
+  function closeModal() {
+    document.getElementById('productModal').classList.add('hidden');
+  }
+  
+  
+  async function saveProduct(e) {
+    e.preventDefault();
+    const form = e.target;
+    const id   = form.dataset.id;
+    const payload = {
+      name:           form.name.value,
+      starting_price: parseFloat(form.price.value),
+      thumbnail:      form.thumbnail.value,
+      category:       form.category.value,
+      description:    form.description.value,
+      is_active:      form.isActive.checked
+    };
+      await fetch(id ? `${api}/${id}` : api, {
+      method: id ? 'PUT' : 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
     });
-  </script>
+	
+	// Clear filters so new/updated item shows up:
+  document.getElementById('categoryFilter').value = '';
+  document.getElementById('statusFilter').value   = '';
+    closeModal();
+    fetchProducts();
+  }
+
+  async function deleteProduct(id) {
+    if (!confirm('Delete this product?')) return;
+    await fetch(`${api}/${id}`, { method: 'DELETE' });
+    fetchProducts();
+  }
+
+  //
+  // 2) Fetch + Filter + Render
+  //
+ async function fetchProducts() {
+  allProducts = await fetch(api).then(r => r.json());
+  initFilters();
+  document.getElementById('categoryFilter').value = '';
+  document.getElementById('statusFilter').value   = '';
+  renderProducts();
+}
+
+async function fetchProducts() {
+  allProducts = await fetch(api).then(r => r.json());
+  initFilters();
+
+  // ← reset both dropdowns to “All”
+  document.getElementById('categoryFilter').value = '';
+  document.getElementById('statusFilter').value   = '';
+
+  renderProducts();
+}
+
+
+  function initFilters() {
+    const catSel = document.getElementById('categoryFilter');
+    // remove old options except value=""
+    catSel.querySelectorAll('option:not([value=""])').forEach(o => o.remove());
+
+    // only valid, non-empty categories
+    const cats = [...new Set(
+      allProducts
+        .map(p => p.category)
+        .filter(c => typeof c === 'string' && c.trim() !== '')
+    )];
+
+    cats.forEach(c => {
+      const opt = document.createElement('option');
+      opt.value = c;
+      opt.textContent = c.charAt(0).toUpperCase() + c.slice(1);
+      catSel.appendChild(opt);
+    });
+
+    catSel.onchange = renderProducts;
+    document.getElementById('statusFilter').onchange = renderProducts;
+  }
+
+  function renderProducts() {
+    const category = document.getElementById('categoryFilter').value;
+    const status   = document.getElementById('statusFilter').value;
+
+    let filtered = allProducts;
+    if (category) filtered = filtered.filter(p => p.category === category);
+    if (status)   filtered = filtered.filter(p => status === 'active' ? p.is_active : !p.is_active);
+
+    const tbody = document.querySelector('#productsTable tbody');
+    tbody.innerHTML = '';
+    filtered.forEach(p => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>
+          <img class="thumb-img" src="/assets/${p.thumbnail}" alt="${p.name}">
+        </td>
+        <td>${p.name}</td>
+        <td>$${p.starting_price.toFixed(2)}</td>
+        <td>${p.is_active ? '✔️' : '❌'}</td>
+        <td>
+          <button class="btnEdit"  data-id="${p._id}">Edit</button>
+          <button class="btnDelete"data-id="${p._id}">Delete</button>
+        </td>`;
+      tbody.appendChild(tr);
+    });
+  }
+
+  //
+  // 3) Wire up on load
+  //
+  document.addEventListener('DOMContentLoaded', () => {
+    fetchProducts();
+
+    document.getElementById('btnAddProduct').onclick = () => openModal();
+    document.getElementById('btnCancel').onclick      = closeModal;
+    document.getElementById('formProduct').onsubmit   = saveProduct;
+    document.querySelector('#productsTable tbody').onclick = e => {
+      if (e.target.matches('.btnEdit')) {
+        fetch(`${api}/${e.target.dataset.id}`)
+          .then(r => r.json())
+          .then(data => openModal(true, data));
+      }
+      if (e.target.matches('.btnDelete')) {
+        deleteProduct(e.target.dataset.id);
+      }
+    };
+  });
+</script>
+
+
+
 </body>
 </html>

@@ -1,17 +1,39 @@
-/* products.css */
+/* Layout */
 body, html { margin:0; padding:0; font-family:sans-serif; }
 .products-wrapper { display:flex; }
 .sidebar { width:220px; background:#2c3e50; color:#fff; min-height:100vh; }
-.sidebar-nav a { color:#fff; padding:0.75rem 1rem; display:block; text-decoration:none; }
-.sidebar-nav a.active { background:#34495e; }
+.sidebar-header { padding:1rem; text-align:center; border-bottom:1px solid #34495e; }
+.sidebar-nav ul { list-style:none; margin:0; padding:0; }
+.sidebar-nav a { color:#fff; text-decoration:none; display:block; padding:0.75rem 1rem; }
+.sidebar-nav a.active, .sidebar-nav a:hover { background:#34495e; }
 .main-content { flex:1; padding:1rem; background:#ecf0f1; }
 .topbar { display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; }
 #productsTable { width:100%; border-collapse:collapse; }
 #productsTable th, #productsTable td { padding:0.5rem; border:1px solid #ccc; }
 #productsTable th { background:#bdc3c7; }
+
+/* Modal */
 .modal { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.4); display:flex; justify-content:center; align-items:center; }
 .modal.hidden { display:none; }
-.modal form { background:#fff; padding:1.5rem; border-radius:8px; width:320px; display:flex; flex-direction:column; }
-.modal label { margin-bottom:0.75rem; }
-.modal input, .modal textarea { width:100%; padding:0.5rem; margin-top:0.25rem; }
-.modal button { margin-top:0.5rem; }
+#formProduct { background:#fff; padding:1.5rem; border-radius:8px; width:320px; display:flex; flex-direction:column; }
+#formProduct label { margin-bottom:0.75rem; }
+#formProduct input, #formProduct textarea { width:100%; padding:0.5rem; margin-top:0.25rem; }
+.modal-actions { display:flex; justify-content:flex-end; gap:0.5rem; margin-top:1rem; }
+/* Thumbnail image in products table */
+.thumb-img {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+/* Filter bar */
+.filters {
+  display: flex;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+.filters label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}

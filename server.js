@@ -68,11 +68,12 @@ function ensureAdminLoggedIn(req, res, next) {
 app.get('/admin/login.html', /* … */);
 app.get('/admin/logout', /* … */);
 
+
 // 9) Admin pages
 app.get('/admin', (req, res) => res.redirect('/admin/login.html'));
-app.get('/admin/dashboard.html', ensureAdminLoggedIn, /* … */);
-app.get('/admin/users.html',      ensureAdminLoggedIn, /* … */);
-app.get('/admin/products.html',   ensureAdminLoggedIn, /* … */);
+app.get('/admin/dashboard', ensureAdminLoggedIn, /* … */);
+app.get('/admin/users',      ensureAdminLoggedIn, /* … */);
+app.get('/admin/products',   ensureAdminLoggedIn, /* … */);
 
 
 app.post('/admin/login', async (req, res) => {
@@ -84,12 +85,13 @@ app.post('/admin/login', async (req, res) => {
       return res.redirect('/admin/login.html?error=Invalid+credentials');
     }
     req.session.admin = user.username;
-    res.redirect('/admin/dashboard.html');
+    res.redirect('/admin/dashboard');
   } catch (err) {
     console.error('POST /admin/login error:', err);
     res.status(500).send('Server error');
   }
 });
+
 
 app.get('/admin/logout', (req, res) =>
   req.session.destroy(() => {
@@ -99,21 +101,23 @@ app.get('/admin/logout', (req, res) =>
 );
 
 // 9) Admin pages
-app.get('/admin/dashboard.html', ensureAdminLoggedIn, (req, res) =>
+// Serve dashboard.html when someone visits /admin/dashboard
+app.get('/admin/dashboard', ensureAdminLoggedIn, (req, res) =>
   res.sendFile(path.join(__dirname, 'public', 'admin', 'dashboard.html'))
 );
-app.get('/admin/users.html', ensureAdminLoggedIn, (req, res) =>
+
+app.get('/admin/users', ensureAdminLoggedIn, (req, res) =>
   res.sendFile(path.join(__dirname, 'public', 'admin', 'users.html'))
 );
-app.get('/admin/products.html', ensureAdminLoggedIn, (req, res) =>
+app.get('/admin/products', ensureAdminLoggedIn, (req, res) =>
   res.sendFile(path.join(__dirname, 'public', 'admin', 'products.html'))
 );
 // ← Insert your alias HERE:
 app.get('/admin/users', ensureAdminLoggedIn, (req, res) => {
-  res.redirect('/admin/users.html');
+  res.redirect('/admin/users');
 });
 app.get('/admin/users', ensureAdminLoggedIn, (req, res) => {
-  res.redirect('/admin/products.html');
+  res.redirect('/admin/products');
 });
 
 // 10) User API
@@ -148,60 +152,71 @@ app.delete('/users/:id', async (req, res) => {
 });
 
 // 11) Product API
+// Serve Manage Products page
+app.get('/admin/products.html', ensureAdminLoggedIn, (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'admin', 'products.html'));
+});
+
+// Product CRUD API
 app.get('/products', async (req, res) => {
-  try {
-    const products = await req.app.locals.db.collection('products').find().toArray();
-    res.json(products);
-  } catch (err) {
-    console.error('GET /products error:', err);
-    res.status(500).json({ message: 'Server Error' });
-  }
+  const prods = await req.app.locals.db.collection('products').find().toArray();
+  res.json(prods);
 });
 app.get('/products/:id', async (req, res) => {
-  try {
-    const prod = await req.app.locals.db.collection('products').findOne({ _id: new ObjectId(req.params.id) });
-    if (!prod) return res.status(404).json({ message: 'Not found' });
-    res.json(prod);
-  } catch (err) {
-    console.error('GET /products/:id error:', err);
-    res.status(500).json({ message: 'Server Error' });
-  }
+  const prod = await req.app.locals.db.collection('products')
+    .findOne({ _id: new ObjectId(req.params.id) });
+  if (!prod) return res.status(404).json({ message: 'Not found' });
+  res.json(prod);
 });
 app.post('/products', async (req, res) => {
-  try {
-    const result = await req.app.locals.db.collection('products').insertOne({ ...req.body, createdAt: new Date() });
-    res.status(201).json({ _id: result.insertedId });
-  } catch (err) {
-    console.error('POST /products error:', err);
-    res.status(500).json({ message: 'Server Error' });
-  }
+  const result = await req.app.locals.db.collection('products')
+    .insertOne({ ...req.body, createdAt: new Date() });
+  res.status(201).json({ _id: result.insertedId });
 });
 app.put('/products/:id', async (req, res) => {
-  try {
-    await req.app.locals.db.collection('products').updateOne(
-      { _id: new ObjectId(req.params.id) },
-      { $set: req.body }
-    );
-    res.sendStatus(204);
-  } catch (err) {
-    console.error('PUT /products/:id error:', err);
-    res.status(500).json({ message: 'Server Error' });
-  }
+  await req.app.locals.db.collection('products')
+    .updateOne({ _id: new ObjectId(req.params.id) }, { $set: req.body });
+  res.sendStatus(204);
 });
 app.delete('/products/:id', async (req, res) => {
-  try {
-    await req.app.locals.db.collection('products').deleteOne({ _id: new ObjectId(req.params.id) });
-    res.sendStatus(204);
-  } catch (err) {
-    console.error('DELETE /products/:id error:', err);
-    res.status(500).json({ message: 'Server Error' });
-  }
+  await req.app.locals.db.collection('products')
+    .deleteOne({ _id: new ObjectId(req.params.id) });
+  res.sendStatus(204);
 });
+
+function initFilters() {
+  const catSel = document.getElementById('categoryFilter');
+  // remove old options (besides the “All” one)
+  catSel.querySelectorAll('option:not([value=""])').forEach(o => o.remove());
+
+  // only keep non-empty categories:
+  const cats = [
+    ...new Set(
+      allProducts
+        .map(p => p.category)
+        .filter(c => typeof c === 'string' && c.trim() !== '')
+    )
+  ];
+  console.log('🟢 Unique categories:', cats);
+
+  cats.forEach(c => {
+    const opt = document.createElement('option');
+    opt.value = c;
+    opt.textContent = c.charAt(0).toUpperCase() + c.slice(1);
+    catSel.appendChild(opt);
+  });
+
+  catSel.onchange = renderProducts;
+  document.getElementById('statusFilter').onchange = renderProducts;
+}
+
 
 // 12) 404 handler
 app.use((req, res) => {
   res.status(404).sendFile(path.join(__dirname, 'public', '404.html'));
 });
+
+
 
 // 13) Start server
 app.listen(PORT, () => {
