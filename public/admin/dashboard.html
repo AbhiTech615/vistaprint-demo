@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Admin Dashboard</title>
+  <!-- resolves to /admin/css/dashboard.css -->
   <link rel="stylesheet" href="css/dashboard.css" />
 </head>
 <body>
@@ -11,7 +12,7 @@
     <!-- Sidebar Navigation -->
     <aside class="sidebar">
       <div class="sidebar-header">
-        <h2>Your App</h2>
+        <h2>Admin Panel</h2>
       </div>
       <nav class="sidebar-nav">
         <ul>
@@ -24,12 +25,7 @@
 
     <!-- Main Content -->
     <main class="main-content">
-      <!-- Top Bar -->
-      <header class="topbar">
-        <h1>Dashboard</h1>
-      </header>
-
-      <!-- Dashboard Cards / Info -->
+      <header class="topbar"><h1>Dashboard</h1></header>
       <section class="cards-section">
         <div class="card">
           <h3>Total Users</h3>
@@ -37,47 +33,47 @@
         </div>
         <div class="card">
           <h3>Recent Signups</h3>
-          <ul id="recentUsers">
-            <li>Loading…</li>
-          </ul>
+          <ul id="recentUsers"><li>Loading…</li></ul>
         </div>
       </section>
     </main>
   </div>
 
-  <!-- Client-side JS to fetch /users and populate the cards -->
   <script>
+    // Fetch user stats from your /users API
     async function loadDashboardData() {
       try {
         const res = await fetch('/users');
         const users = await res.json();
 
-        // Total users
+        // 1) total count
         document.getElementById('totalUsers').textContent = users.length;
 
-        // Show last 5 joined (sorted by 'joined' descending)
-        const sorted = users
+        // 2) last 5 by joined date
+        const recent = users
           .slice()
-          .sort((a, b) => new Date(b.joined) - new Date(a.joined))
-          .slice(0, 5);
+          .sort((a,b)=> new Date(b.joined) - new Date(a.joined))
+          .slice(0,5);
+
         const list = document.getElementById('recentUsers');
         list.innerHTML = '';
-        if (sorted.length === 0) {
-          list.innerHTML = '<li>No recent signups</li>';
+        if (!recent.length) {
+          list.innerHTML = '<li>No signups yet</li>';
         } else {
-          sorted.forEach((u) => {
+          recent.forEach(u => {
             const li = document.createElement('li');
-            li.textContent = u.name + ' (' + new Date(u.joined).toLocaleDateString() + ')';
+            li.textContent =
+              `${u.name} — ${new Date(u.joined).toLocaleDateString()}`;
             list.appendChild(li);
           });
         }
       } catch (err) {
         console.error('Error loading dashboard data:', err);
-        document.getElementById('totalUsers').textContent = 'Error';
-        document.getElementById('recentUsers').innerHTML = '<li>Could not load</li>';
+        document.getElementById('totalUsers').textContent = '—';
+        document.getElementById('recentUsers').innerHTML =
+          '<li>Error loading</li>';
       }
     }
-
     document.addEventListener('DOMContentLoaded', loadDashboardData);
   </script>
 </body>

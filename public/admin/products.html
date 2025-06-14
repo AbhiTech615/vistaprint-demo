@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Manage Products</title>
+  <link rel="stylesheet" href="css/products.css" />
+</head>
+<body>
+  <div class="products-wrapper">
+    <aside class="sidebar">
+      <!-- reuse your dashboard sidebar -->
+      <div class="sidebar-header"><h2>Admin Panel</h2></div>
+      <nav class="sidebar-nav">
+        <ul>
+          <li><a href="/admin/dashboard.html">Dashboard</a></li>
+          <li><a href="/admin/users.html">Manage Users</a></li>
+          <li><a href="/admin/products.html" class="active">Manage Products</a></li>
+          <li><a href="/admin/logout">Logout</a></li>
+        </ul>
+      </nav>
+    </aside>
+    <main class="main-content">
+      <header class="topbar">
+        <h1>Products</h1>
+        <button id="btnAddProduct">+ Add Product</button>
+      </header>
+      <table id="productsTable">
+        <thead>
+          <tr><th>Name</th><th>Price</th><th>Actions</th></tr>
+        </thead>
+        <tbody><!-- rows go here --></tbody>
+      </table>
+      <!-- Modal for add/edit -->
+      <div id="productModal" class="modal hidden">
+        <form id="formProduct">
+          <h3 id="modalTitle">Add Product</h3>
+          <label>Name: <input type="text" name="name" required></label>
+          <label>Price: <input type="number" name="price" step="0.01" required></label>
+          <label>Image URL: <input type="text" name="imageUrl"></label>
+          <label>Description:<textarea name="description"></textarea></label>
+          <button type="submit">Save</button>
+          <button type="button" id="btnCancel">Cancel</button>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const api = '/products';
+
+    async function fetchProducts() {
+      const res = await fetch(api);
+      return res.json();
+    }
+
+    async function renderProducts() {
+      const products = await fetchProducts();
+      const tbody = document.querySelector('#productsTable tbody');
+      tbody.innerHTML = '';
+      products.forEach(p => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${p.name}</td>
+          <td>$${p.price.toFixed(2)}</td>
+          <td>
+            <button class="btnEdit" data-id="${p._id}">Edit</button>
+            <button class="btnDelete" data-id="${p._id}">Delete</button>
+          </td>`;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function openModal(edit = false, data = {}) {
+      document.getElementById('productModal').classList.remove('hidden');
+      document.getElementById('modalTitle').textContent = edit ? 'Edit Product' : 'Add Product';
+      const form = document.getElementById('formProduct');
+      form.name.value = data.name || '';
+      form.price.value = data.price || '';
+      form.imageUrl.value = data.imageUrl || '';
+      form.description.value = data.description || '';
+      form.dataset.id = data._id || '';
+    }
+
+    function closeModal() {
+      document.getElementById('productModal').classList.add('hidden');
+    }
+
+    async function saveProduct(evt) {
+      evt.preventDefault();
+      const form = evt.target;
+      const id = form.dataset.id;
+      const payload = {
+        name: form.name.value,
+        price: parseFloat(form.price.value),
+        imageUrl: form.imageUrl.value,
+        description: form.description.value
+      };
+      const opts = {
+        method: id ? 'PUT' : 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      };
+      const url = id ? `${api}/${id}` : api;
+      await fetch(url, opts);
+      closeModal();
+      renderProducts();
+    }
+
+    async function deleteProduct(id) {
+      if (!confirm('Delete this product?')) return;
+      await fetch(`${api}/${id}`, { method: 'DELETE' });
+      renderProducts();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderProducts();
+      document.getElementById('btnAddProduct').onclick = () => openModal();
+      document.getElementById('btnCancel').onclick = closeModal;
+      document.getElementById('formProduct').onsubmit = saveProduct;
+      document.querySelector('#productsTable tbody').onclick = e => {
+        if (e.target.matches('.btnEdit')) {
+          const id = e.target.dataset.id;
+          fetch(`${api}/${id}`).then(res => res.json()).then(openModal.bind(null, true));
+        }
+        if (e.target.matches('.btnDelete')) {
+          deleteProduct(e.target.dataset.id);
+        }
+      };
+    });
+  </script>
+</body>
+</html>

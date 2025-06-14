@@ -1,17 +1,33 @@
-<%- include('partials/header', { pageTitle: 'Catalog', activePage: 'catalog' }) %>
+<%- include('partials/header', { pageTitle: 'Our Products' }) %>
 
 <section class="breadcrumb-section">
-  <div class="container">
-    <!-- breadcrumb & page title here -->
-  </div>
+  <!-- static breadcrumb -->
 </section>
 
 <main class="catalog-main container">
-  <!-- filters sidebar & product grid -->
+  <!-- Sidebar: replace static links with dynamic ones based on filters -->
+  <!-- Products grid: replace hard-coded cards with a loop: -->
+  <% if (products.length) { %>
+    <% products.forEach(prod => { %>
+      <article class="product-card">
+        <a href="/product/<%= prod.slug %>">
+          <div class="product-img">
+            <img src="<%= prod.imageUrl || '/assets/'+prod.thumbnail %>" alt="<%= prod.name %>">
+          </div>
+          <div class="product-info">
+            <h3><%= prod.name %></h3>
+            <p class="price">Starting at ₹<%= prod.starting_price %></p>
+          </div>
+        </a>
+      </article>
+    <% }) %>
+  <% } else { %>
+    <p>No products found.</p>
+  <% } %>
 </main>
 
 <nav class="pagination-container">
-  <!-- pagination -->
+  <!-- dynamic prev/next & page-number links -->
 </nav>
 
 <%- include('partials/footer') %>
