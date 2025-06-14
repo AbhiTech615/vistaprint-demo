@@ -65,9 +65,15 @@ function ensureAdminLoggedIn(req, res, next) {
 }
 
 // 8) Admin Auth routes
-app.get('/admin/login.html', (req, res) =>
-  res.sendFile(path.join(__dirname, 'public', 'admin', 'login.html'))
-);
+app.get('/admin/login.html', /* … */);
+app.get('/admin/logout', /* … */);
+
+// 9) Admin pages
+app.get('/admin', (req, res) => res.redirect('/admin/login.html'));
+app.get('/admin/dashboard.html', ensureAdminLoggedIn, /* … */);
+app.get('/admin/users.html',      ensureAdminLoggedIn, /* … */);
+app.get('/admin/products.html',   ensureAdminLoggedIn, /* … */);
+
 
 app.post('/admin/login', async (req, res) => {
   const { username, password } = req.body;
