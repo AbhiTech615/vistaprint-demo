@@ -16,6 +16,7 @@
           <li><a href="/admin/dashboard">Dashboard</a></li>
           <li><a href="/admin/users">Manage Users</a></li>
           <li><a href="/admin/products" class="active">Manage Products</a></li>
+		   <li><a href="/admin/orders" class="active">Manage Orders</a></li>
           <li><a href="/admin/logout">Logout</a></li>
         </ul>
       </nav>
@@ -56,18 +57,6 @@
 
     <!------------------------------------------->
 	
-      <table id="productsTable">
-        <thead>
-		  <tr>
-			<th>Thumb</th>
-			<th>Name</th>
-			<th>Starting Price</th>
-			<th>Active?</th>
-			<th>Actions</th>
-		  </tr>
-		</thead>
-
-
         <tbody></tbody>
       </table>
 
@@ -165,18 +154,6 @@
   renderProducts();
 }
 
-async function fetchProducts() {
-  allProducts = await fetch(api).then(r => r.json());
-  initFilters();
-
-  // ← reset both dropdowns to “All”
-  document.getElementById('categoryFilter').value = '';
-  document.getElementById('statusFilter').value   = '';
-
-  renderProducts();
-}
-
-
   function initFilters() {
     const catSel = document.getElementById('categoryFilter');
     // remove old options except value=""
@@ -208,25 +185,32 @@ async function fetchProducts() {
     if (category) filtered = filtered.filter(p => p.category === category);
     if (status)   filtered = filtered.filter(p => status === 'active' ? p.is_active : !p.is_active);
 
-    const tbody = document.querySelector('#productsTable tbody');
-    tbody.innerHTML = '';
-    filtered.forEach(p => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>
-          <img class="thumb-img" src="/assets/${p.thumbnail}" alt="${p.name}">
-        </td>
-        <td>${p.name}</td>
-        <td>$${p.starting_price.toFixed(2)}</td>
-        <td>${p.is_active ? '✔️' : '❌'}</td>
-        <td>
-          <button class="btnEdit"  data-id="${p._id}">Edit</button>
-          <button class="btnDelete"data-id="${p._id}">Delete</button>
-        </td>`;
-      tbody.appendChild(tr);
-    });
-  }
+	const tbody = document.querySelector('#productsTable tbody');
+     tbody.innerHTML = '';
 
+     filtered.forEach(p => {
+      const tr = document.createElement('tr');
+	   // safely format price
+      const price = (typeof p.starting_price === 'number')
+        ? p.starting_price.toFixed(2)
+        : '0.00';
+
+      // only render <img> if the file actually exists
+      const thumb = p.thumbnail
+        ? `<img class="thumb-img" src="/assets/${p.thumbnail}" alt="${p.name}">`
+        : '';
+			tr.innerHTML = `
+			<td>${thumb}</td>
+			<td>${p.name}</td>
+			<td>$${price}</td>
+			<td>${p.is_active ? '✔️' : '❌'}</td>
+			<td>
+			  <button class="btnEdit"  data-id="${p._id}">Edit</button>
+			  <button class="btnDelete"data-id="${p._id}">Delete</button>
+			</td>`;
+       tbody.appendChild(tr);
+     });
+}
   //
   // 3) Wire up on load
   //
@@ -248,8 +232,5 @@ async function fetchProducts() {
     };
   });
 </script>
-
-
-
 </body>
 </html>
