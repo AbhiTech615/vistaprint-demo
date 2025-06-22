@@ -5,123 +5,64 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Admin: Manage Users</title>
   <link rel="stylesheet" href="css/users.css" />
-  <style>
-    /* Minimal styling for the table; move to users.css if you want */
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f6f8;
-      margin: 0;
-      padding: 1rem;
-    }
-    h2 {
-      color: #333;
-      margin-bottom: 1rem;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background-color: #fff;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
-    thead {
-      background-color: #007bff;
-      color: #fff;
-    }
-    th,
-    td {
-      padding: 0.75rem 1rem;
-      text-align: left;
-      border-bottom: 1px solid #e0e0e0;
-    }
-    tr:hover {
-      background-color: #f1f1f1;
-    }
-    .logout-btn {
-      float: right;
-      background: #cc0000;
-      color: #fff;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 4px;
-      cursor: pointer;
-      margin-bottom: 1rem;
-    }
-    .logout-btn:hover {
-      background: #990000;
-    }
-  </style>
+  <link rel="stylesheet" href="css/dashboard.css" />
 </head>
-<body>
-  <button class="logout-btn" onclick="window.location.href='/admin/logout'">
-    Log Out
-  </button>
-  <h2>All Registered Users</h2>
+<body> 
+  <div class="admin-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h2>Admin Panel</h2>
+      </div>
+      <nav class="sidebar-nav">
+        <ul>
+          <li><a href="/admin/dashboard">Dashboard</a></li>
+          <li><a href="/admin/users" class="active">Manage Users</a></li>
+          <li><a href="/admin/products">Manage Products</a></li>
+          <li><a href="/admin/orders">Manage Orders</a></li>
+          <li><a href="/admin/logout">Logout</a></li>
+        </ul>
+      </nav>
+    </aside>
+  </div>
 
-  <table>
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Joined On</th>
-      </tr>
-    </thead>
-    <tbody id="usersTableBody">
-      <!-- Rows will be inserted here by JavaScript -->
-    </tbody>
-  </table>
+  <main class="main-content">
+    <header class="topbar">
+      <h1>All Registered Users</h1>
+    </header>
 
-  <script>
-    // On page load, fetch /users and populate the table
-    async function loadUsers() {
-      try {
-        const res = await fetch("/users");
-        if (!res.ok) {
-          throw new Error("Network response was not OK");
-        }
-        const users = await res.json();
-        const tbody = document.getElementById("usersTableBody");
-
-        if (!Array.isArray(users) || users.length === 0) {
-          tbody.innerHTML = `
-            <tr>
-              <td colspan="4" style="text-align:center; padding: 1rem;">
-                No users found.
-              </td>
-            </tr>`;
-          return;
-        }
-
-        // Clear any placeholder rows
-        tbody.innerHTML = "";
-
-        users.forEach((user, index) => {
-          // Assume user has { _id, name, email, joined: Date }
-          const joinedDate = new Date(user.joined).toLocaleDateString();
-          const row = document.createElement("tr");
-
-          row.innerHTML = `
-            <td>${index + 1}</td>
-            <td>${user.name || ""}</td>
-            <td>${user.email || ""}</td>
-            <td>${joinedDate}</td>
-          `;
-          tbody.appendChild(row);
-        });
-      } catch (err) {
-        console.error("Failed to load users:", err);
-        const tbody = document.getElementById("usersTableBody");
-        tbody.innerHTML = `
+    <div class="card">
+      <table class="users-table">
+        <thead>
           <tr>
-            <td colspan="4" style="text-align:center; padding: 1rem; color: #cc0000;">
-              Error fetching users.
-            </td>
-          </tr>`;
-      }
-    }
+            <th>#</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Joined</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="userList"></tbody>
+      </table>
+    </div>
 
-    // Run on load
-    window.addEventListener("DOMContentLoaded", loadUsers);
-  </script>
+    <!-- Edit Modal -->
+    <div id="userEditModal" class="modal hidden">
+      <div class="modal-content">
+        <h3>Edit User</h3>
+        <input type="hidden" id="editUserId" />
+        <label>Name: <input type="text" id="editUserName" /></label>
+        <label>Email: <input type="email" id="editUserEmail" /></label>
+        <div class="modal-actions">
+          <button id="btnSaveUserChanges">Save</button>
+          <button onclick="document.getElementById('userEditModal').classList.add('hidden')">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </main>
+<script src="/routes/users.js"></script>
+
+  <script src="/admin/js/users.js"></script>
+  
 </body>
 </html>
