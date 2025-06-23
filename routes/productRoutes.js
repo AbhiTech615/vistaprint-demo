@@ -45,14 +45,15 @@ router.put('/:id', async (req, res) => {
   try {
     await req.app.locals.db.collection('products').updateOne(
       { _id: new ObjectId(req.params.id) },
-      { $set: req.body }
+      { $set: { ...req.body, updatedAt: new Date() } }
     );
     res.sendStatus(204);
   } catch (err) {
-    console.error("PUT /products/:id error:", err);
-    res.status(500).json({ message: "Failed to update product" });
+    console.error(`PUT /products/:id error:`, err);
+    res.status(500).json({ message: "Failed to update product", error: err.message });
   }
 });
+
 
 // DELETE product
 router.delete('/:id', async (req, res) => {

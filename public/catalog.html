@@ -55,7 +55,7 @@
     <aside class="filters-sidebar">
       <h2>Categories</h2>
       <ul class="category-list">
-        <li><a href="catalog.html?cat=business-cards">Business Cards</a></li>
+        <li><a href="catalog.html?cat=businesscards">Business Cards</a></li>
         <li><a href="catalog.html?cat=t-shirts">T-Shirts</a></li>
         <li><a href="catalog.html?cat=mugs">Mugs</a></li>
         <li><a href="catalog.html?cat=flyers">Flyers</a></li>
@@ -80,10 +80,11 @@
       <article class="product-card">
         <a href="product-detail.html?id=business-card">
           <div class="product-img">
-            <img src="assets/business-card-thumb.jpg" alt="Business Cards" />
+		  <br/>
+            <img src="images/tshirt.png" alt="T-Shirts" />
           </div>
           <div class="product-info">
-            <h3>Business Cards</h3>
+            <h3>T-Shirts</h3>
             <p class="price">Starting at ₹199</p>
             <button class="btn btn-primary">View Details</button>
           </div>
@@ -93,9 +94,9 @@
       <!-- Example Product Card #2 -->
       <article class="product-card">
         <a href="product-detail.html?id=custom-mugs">
-          <div class="product-img">
-            <img src="assets/custom-mug-thumb.jpg" alt="Custom Mugs" />
-          </div>
+          <div class="product-img"><br/>
+            <img src="images/mug.png" alt="mug" />
+			</div>
           <div class="product-info">
             <h3>Custom Mugs</h3>
             <p class="price">Starting at ₹149</p>
@@ -106,11 +107,12 @@
 	   <!-- Example Product Card #1 -->
       <article class="product-card">
         <a href="product-detail.html?id=business-card">
-          <div class="product-img">
+          <div class="product-img"><br/>
             <img src="assets/business-card-thumb.jpg" alt="Business Cards" />
           </div>
           <div class="product-info">
             <h3>Business Cards</h3>
+
             <p class="price">Starting at ₹199</p>
             <button class="btn btn-primary">View Details</button>
           </div>
@@ -140,5 +142,34 @@
       <p>© 2025 MyPrintShop  |  Contact: +91-XXX-XXXXXXX  |  support@myprintshop.com</p>
     </div>
   </footer>
+  <script>
+document.addEventListener('DOMContentLoaded', async () => {
+  try {
+    const res = await fetch('/api/products');
+    const products = await res.json();
+
+    const productsGrid = document.querySelector('.products-grid');
+
+    productsGrid.innerHTML = products.map(p => `
+      <article class="product-card">
+        <a href="/product-detail.html?id=${p._id}">
+          <div class="product-img">
+            <img src="${p.thumbnail}" alt="${p.name}">
+          </div>
+          <div class="product-info">
+            <h3>${p.name}</h3>
+            <p class="price">Starting at ₹${p.starting_price}</p>
+            <button class="btn btn-primary">Customize</button>
+          </div>
+        </a>
+      </article>
+    `).join('');
+  } catch (error) {
+    console.error('Error loading products:', error);
+  }
+});
+</script>
+
+  
 </body>
 </html>

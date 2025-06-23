@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Product Details</title>
+<link rel="stylesheet" href="./css/productdetail.css">
+<link rel="stylesheet" href="./css/navbar.css" />
+<link rel="stylesheet" href="./css/base.css" />
+  <link rel="stylesheet" href="./css/motionheader.css" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
+<script defer src="./js/product-detail.js"></script>
+
+</head>
+<body>
+  <header class="motion-navbar">
+    <nav class="nav-container">
+      <div class="logo">
+        <a href="/index.html">
+          <img src="./assets/logo.png" alt="Site Logo" class="logo" />
+        </a>
+      </div>
+      <ul class="nav-links">
+        <li><a href="/index">Home</a></li>
+        <li><a href="./catalog">Catalog</a></li>
+		<li><a href="cart.html">🛒 Cart</a></li>
+        <li><a href="./checkout">Checkout</a></li>
+		<li><a href="/admin/login">Admin Login</a></li>
+
+      </ul>
+    </nav>
+  </header>
+
+  <main class="product-page grid-layout">
+    <div class="customization-preview">
+      <h2 id="productName"></h2>
+      <canvas id="productCanvas" width="500" height="500"></canvas>
+	  
+	  <div class="thumbnail-panel">
+  <img src="./assets/businesscards.png" onclick="loadTemplate(this.src)" alt="Template 1" />
+ <!-- <img src="./assets/card2.jpg" onclick="loadTemplate(this.src)" alt="Template 2" />
+  <img src="./assets/card3.jpg" onclick="loadTemplate(this.src)" alt="Template 3" />-->
+</div>
+
+
+      <p class="description" id="productDescription"></p>
+    </div>
+
+    <aside class="customization-tools">
+      <h3>Customize Your Product</h3>
+
+      <label>Business Name:
+        <input type="text" id="bizName" placeholder="Type your business name..." />
+      </label>
+
+      <label>Font Style:
+        <select id="fontStyle">
+          <option value="Arial">Arial</option>
+          <option value="Times New Roman">Times New Roman</option>
+          <option value="Courier New">Courier New</option>
+        </select>
+      </label>
+
+      <label>Text Color:
+        <input type="color" id="fontColor" value="#000000" />
+      </label>
+
+      <label>Quantity:
+        <input type="number" id="quantity" min="1" value="100" />
+      </label>
+
+      <p class="price">Price: ₹<span id="productPrice">0</span></p>
+
+<details>
+  <summary>Advanced Options</summary>
+  <div class="button-group">
+    <button onclick="addText()">Add Extra Text</button>
+	<label>Upload Image:
+  <input type="file" id="imageUpload" accept="image/" />
+</label>
+    <button onclick="addImage()">Add Image</button>
+    <button onclick="saveDesign()">Save Design</button>
+    <button onclick="downloadDesign()">Download PNG</button>
+    <button id="undoBtn" onclick="undoCanvas()">Undo</button>
+    <button id="redoBtn" onclick="redoCanvas()">Redo</button>
+  </div>
+</details>
+    <button id="addToCartButton" class="primary-btn">Add to Cart</button>
+    </aside>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 VistaPrint Clone. All rights reserved.</p>
+  </footer>
+</body>
+</html>

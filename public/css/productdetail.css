@@ -1,20 +1,88 @@
-.product-detail {
+/* Grid layout for desktop (Vistaprint style) */
+.grid-layout {
+  display: grid;
+  grid-template-columns: 60% 40%;
+  gap: 30px;
+  align-items: start;
+  padding: 5rem;
+}
+
+.customization-preview {
   display: flex;
-  gap: 20px;
-  padding: 20px;
-  align-items: flex-start;
+  flex-direction: column;
+  align-items: center;
 }
 
-.product-detail img {
-  width: 300px;
-  height: auto;
+.customization-tools {
+  background: #f9f9f9;
+  padding: 1.5rem;
   border-radius: 10px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
 }
 
-.product-detail div {
-  max-width: 500px;
-}
-
-.product-detail h2 {
+.customization-tools h3 {
   margin-top: 0;
+}
+
+.customization-tools label {
+  display: block;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.customization-tools input,
+.customization-tools select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+  margin: 15px 0;
+  flex-wrap: wrap;
+}
+
+.primary-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #007c89;
+  color: white;
+  border: none;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.primary-btn:hover {
+  background-color: #005e6e;
+}
+
+/* Optional: smaller text and lighter background */
+.price {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin: 10px 0;
+}
+.thumbnail-panel {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.thumbnail-panel img {
+  width: 80px;
+  height: 50px;
+  object-fit: cover;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.thumbnail-panel img:hover {
+  border-color: #007c89;
 }

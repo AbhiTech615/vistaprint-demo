@@ -1,0 +1,20 @@
+button, .btn-customize {
+  padding: 10px 20px;
+  background-color: #0071e3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+button:hover, .btn-customize:hover {
+  background-color: #005bb5;
+}
+.product-page {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+}
+.product-image, .product-info {
+  flex: 1 1 300px;
+}

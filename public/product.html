@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Product Details</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/product.css">
+  
 </head>
 <body>
   <header>
@@ -16,18 +17,36 @@
 
   <main class="product-page">
     <div class="product-image">
-      <img src="images/sample-product.jpg" alt="Product Image">
+	<img src="images/tshirt.png" alt="Product Image" style="max-width: 100%; height: auto;">
+	<!-- <img src="images/sample-product.jpg" alt="Product Image"> -->
     </div>
+	<label for="finish">Finish:</label>
+<select id="finish">
+  <option>Glossy</option>
+  <option>Matte</option>
+</select>
+
+<label for="qty">Quantity:</label>
+<select id="qty">
+  <option>100</option>
+  <option>200</option>
+  <option>500</option>
+</select>
+
+	
+	
+	
     <div class="product-info">
       <h2>Custom Business Card</h2>
       <p class="price">₹499.00</p>
       <p class="description">High-quality premium business cards for your brand identity. Matte or glossy finish available.</p>
-      <button>Add to Cart</button>
+      <a href="product-detail.html?id=business-card" class="btn-customize">Customize This</a>
+
     </div>
   </main>
 
   <footer>
-    <p>&copy; 2025 VistaPrint Clone. All rights reserved.</p>
+    <p>&copy; 2025 Printing. All rights reserved.</p>
   </footer>
 </body>
 </html>
